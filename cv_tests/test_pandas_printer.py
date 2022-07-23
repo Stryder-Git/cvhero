@@ -95,18 +95,18 @@ df_formats = [
     (
         pd.DataFrame([[0, 1, 2], [3, 4, 5]], columns= list("ABC"), index= list("ab")),
         """pd.DataFrame({
-'A': pd.Series(range(0, 4, 3)), 
-'B': pd.Series(range(1, 5, 3)), 
-'C': pd.Series(range(2, 6, 3))
+'A': pd.Series(range(0, 6, 3)), 
+'B': pd.Series(range(1, 7, 3)), 
+'C': pd.Series(range(2, 8, 3))
 }).set_index(pd.Index(['a', 'b']))"""
 
      ),
     (
         pd.DataFrame([[0, 1, 2], [3, np.nan, 5]], columns= list("ABC"), index= list("ab")),
         """pd.DataFrame({
-'A': pd.Series(range(0, 4, 3)), 
+'A': pd.Series(range(0, 6, 3)), 
 'B': pd.Series([1.0, np.nan]), 
-'C': pd.Series(range(2, 6, 3))
+'C': pd.Series(range(2, 8, 3))
 }).set_index(pd.Index(['a', 'b']))""")
 
 ]
