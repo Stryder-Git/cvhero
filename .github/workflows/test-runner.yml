@@ -1,0 +1,25 @@
+name: test-runner
+on: 
+  push:
+    branches:
+      - main
+  
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: ubuntu-latest
+        python-version: ['3.8', '3.9', '3.10']
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+		
+      - run: python --version
+      - run: pip install pytest
+      - run: pip install pandas
+      - run: pip install pyperclip
+      - run: pytest cv_tests
