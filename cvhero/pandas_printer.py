@@ -55,8 +55,8 @@ def _convert(values):
             diffs = np.unique(diffs)
             if diffs.shape[0] == 1:
                 start = values[0]
-                stop = values[-1] + 1
                 step = diffs[0]
+                stop = values[-1] + step
                 return f"range({start}, {stop}, {step})", tz
 
     elif dtype.startswith("datetime64"):
@@ -71,8 +71,8 @@ def _convert(values):
         values = values.astype("string")
         return _repl(str(list(values))), tz
 
-
-    return str(list(values)), tz
+    print(values)
+    return str(list(values)).replace("nan", _np() + "nan"), tz
 
 
 def format_index(index):

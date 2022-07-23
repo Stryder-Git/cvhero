@@ -8,13 +8,13 @@ from pandas.testing import assert_series_equal, assert_frame_equal
 dtypes
 value conversions
     object
-    int
+    int * 
     float
     bool
-    datetime
+    datetime * 
         with tz
         without tz
-    timedelta
+    timedelta *
     category
 
 * 2 with/without nan
@@ -29,36 +29,32 @@ TD = pd.Timedelta
 values = [
     # int
     (S(range(5)), "range(0, 5, 1)"),
-    (S([1, 2, np.nan, 3]), "[1, 2, np.nan, 3]"),
+    (S([3, 4, 5, 6]), "range(3, 7, 1)"),
+    (S([5, 10, 15, 20]), "range(5, 25, 5)"),
+    (S([1, 3, 6, 9]), "[1, 3, 6, 9]"),
 
     #float
     (S([1.1, -2.3, 15.6, np.nan]), "[1.1, -2.3, 15.6, np.nan]"),
+    (S([1, 2, np.nan, 3]), "[1.0, 2.0, np.nan, 3.0]"), # with nan always float
 
     #bool
     (S([True, np.nan, False]), "[True, np.nan, False]"),
 
     #datetime with tz
-    (S(['2022-06-01 13:30:00+00:00', np.nan, '2022-06-03 13:30:00+00:00']), "['2022-06-01 13:30:00', np.nan, '2022-06-03 13:30:00']"),
+    (S(['2022-06-01 13:30:00+00:00', np.nan, '2022-06-03 13:30:00+00:00'],
+       dtype= "datetime64[ns, UTC]"), "['2022-06-01 13:30:00', np.nan, '2022-06-03 13:30:00']"),
      #without tz
-    (S(['2022-06-01 13:30:00', np.nan, '2022-06-03 13:30:00']), "['2022-06-01 13:30:00', np.nan, '2022-06-03 13:30:00']"),
+    (S(['2022-06-01 13:30:00', np.nan, '2022-06-03 13:30:00'],
+       dtype= "datetime64[ns]"), "['2022-06-01 13:30:00', np.nan, '2022-06-03 13:30:00']"),
 
     #timedelta
-     (S([TD("1D"), TD("1.5D"), np.nan, TD("2H")]), "ldeg")
+     (S([TD("1D"), TD("1.5D"), np.nan, TD("2H")]), "['1 days 00:00:00', '1 days 12:00:00', np.nan, '0 days 02:00:00']")
 ]
 @pytest.mark.parametrize("values, expected", values)
 def test_convert(values, expected):
 
     calced, _ = cv.pandas_printer._convert(values)
     assert calced == expected
-
-
-
-
-
-
-
-
-
 
 
 series_formats = [
