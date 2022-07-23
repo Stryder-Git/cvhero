@@ -8,13 +8,13 @@ prettier = "\n"
 
 def _pd():
     if pandas_prefix:
-        return pandas_prefix.removesuffix(".") + "."
+        return (pandas_prefix+".").replace("..", ".")
     else:
         return ""
 
 def _np():
     if numpy_prefix:
-        return numpy_prefix.removesuffix(".") + "."
+        return (numpy_prefix+".").replace("..", ".")
     else:
         return ""
 
