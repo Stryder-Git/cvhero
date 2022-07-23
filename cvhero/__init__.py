@@ -1,3 +1,5 @@
+print("running __init__")
+
 from .pandas_printer import format_pandas
 from pyperclip import copy
 
