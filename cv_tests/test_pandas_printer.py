@@ -78,7 +78,14 @@ series_formats = [
         "pd.Series(['2022-06-01 13:30:00', np.nan, '2022-06-03 13:30:00'],"
         "index= pd.DatetimeIndex(['2022-06-01', '2022-06-02', '2022-06-03']),"
         "dtype= 'datetime64[ns]').dt.tz_localize('UTC')"
-
+    ),
+(
+        pd.Series(['2022-06-01 13:30:00+00:00', np.nan, '2022-06-03 13:30:00+00:00'],
+               index= pd.DatetimeIndex(['2022-06-01', '2022-06-02', '2022-06-03'], tz="America/New_York"),
+               dtype= 'datetime64[ns, UTC]'),
+        "pd.Series(['2022-06-01 13:30:00', np.nan, '2022-06-03 13:30:00'],"
+        "index= pd.DatetimeIndex(['2022-06-01', '2022-06-02', '2022-06-03'],tz= 'America/New_York'),"
+        "dtype= 'datetime64[ns]').dt.tz_localize('UTC')"
     )
 ]
 
@@ -108,14 +115,12 @@ df_formats = [
 'B': pd.Series([1.0, np.nan]), 
 'C': pd.Series(range(2, 8, 3))
 }).set_index(pd.Index(['a', 'b']))""")
-
 ]
 
 @pytest.mark.parametrize("df, formatted", df_formats)
 def test_format_dataframe(df, formatted):
 
     calced = cv.format(df)
-    print(calced)
     assert calced == formatted
     assert_frame_equal(eval(calced), df)
 

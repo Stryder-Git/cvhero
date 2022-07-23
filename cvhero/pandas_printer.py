@@ -71,7 +71,6 @@ def _convert(values):
         values = values.astype("string")
         return _repl(str(list(values))), tz
 
-    print(values)
     return str(list(values)).replace("nan", _np() + "nan"), tz
 
 
