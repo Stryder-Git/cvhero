@@ -19,4 +19,5 @@ jobs:
 
       - run: python --version
       - run: pip install .
+      - run: pip install pytest
       - run: pytest cv_tests
