@@ -12,5 +12,5 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: echo "PMC_VERSION=$(grep "^VERSION.*" setup.py | cut -d " " -f 3 | tr -d "'" | tr -d '"')" >> $GITHUB_ENV
-      - run: echo "version $GITHUB_ENV"
+      - run: echo "version $PMC_VERSION"
       
