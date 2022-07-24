@@ -10,7 +10,7 @@ jobs:
     name: Draft a new release
     runs-on: ubuntu-latest
     steps:
-      # Drafts your next Release notes as Pull Requests are merged into "master"
+      - uses: actions/checkout@v2
       - run: echo "PMC_VERSION=$(grep "^VERSION.*" setup.py | cut -d " " -f 3 | tr -d "'" | tr -d '"')" >> $GITHUB_ENV
       - run: echo "version $GITHUB_ENV"
       
