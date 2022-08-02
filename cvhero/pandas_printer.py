@@ -3,14 +3,20 @@ import pandas as pd
 pdtypes = pd.api.types
 
 pandas_prefix = "pd"
+numpy_prefix = "np"
 prettier = "\n"
 
-def _pref():
+def _pd():
     if pandas_prefix:
-        return pandas_prefix + "."
+        return (pandas_prefix+".").replace("..", ".")
     else:
         return ""
 
+def _np():
+    if numpy_prefix:
+        return (numpy_prefix+".").replace("..", ".")
+    else:
+        return ""
 
 def _dt(s):
     try: return s.dt
@@ -26,55 +32,68 @@ def _strtostr(s):
     return "'" + s + "'"
 
 
+"""
+When can I replace
+
+    
+
+"""
+
+def _repl(s):
+    return s.replace("<NA>", _np() + "nan")
+
 def _convert(values):
+    assert (values != "<NA>").all(), "Nothing can be equal to the string '<NA>'"
+
     dtype = str(values.dtype)
     tz = None
-    if dtype.startswith("datetime64"):
-        if dtype != "datetime64[ns]":
-            tz = str(_dt(values).tz)
-            tz = _strtostr(tz)
-            values = _dt(values).tz_localize(None)
-        values = values.astype("string")
 
-    elif dtype == "timedelta64[ns]":
-        values = values.astype("string")
-        return _pref() + "TimedeltaIndex(" + str(list(values)) + ")", tz
-
-    elif dtype.startswith("int"):
+    if dtype.startswith("int"):
         values = _values(values)
         diffs = np.diff(values)
         if (diffs >= 0).all():
             diffs = np.unique(diffs)
             if diffs.shape[0] == 1:
                 start = values[0]
-                stop = values[-1] + 1
                 step = diffs[0]
+                stop = values[-1] + step
                 return f"range({start}, {stop}, {step})", tz
 
-    values = str(list(values))
-    return values, tz
+    elif dtype.startswith("datetime64"):
+        if dtype != "datetime64[ns]":
+            tz = str(_dt(values).tz)
+            tz = _strtostr(tz)
+            values = _dt(values).tz_localize(None)
+        values = values.astype("string")
+        return _repl(str(list(values))), tz
+
+    elif dtype == "timedelta64[ns]":
+        values = values.astype("string")
+        return _repl(str(list(values))), tz
+
+    return str(list(values)).replace("nan", _np() + "nan"), tz
 
 
 def format_index(index):
     dtype = str(index.dtype)
 
     if dtype.startswith("datetime64"):
-        f = _pref() + "DatetimeIndex("
+        f = _pd() + "DatetimeIndex("
         values, tz = _convert(index)
         f += values
         if not tz is None: f += ",tz= " + tz
         return f + ")"
 
     if dtype == "timedelta64[ns]":
-        return _convert(index)[0]
+        return _pd() + "TimedeltaIndex(" + _convert(index)[0] + ")"
 
-    f = _pref() + "Index("
+    f = _pd() + "Index("
     values, _ = _convert(index)
     return f + values + ")"
 
 
 def format_series(series, ignore_index= False):
-    f = _pref() + "Series("
+    f = _pd() + "Series("
     vals, tz = _convert(series)
     f += vals
     if not ignore_index:
@@ -87,13 +106,16 @@ def format_series(series, ignore_index= False):
     elif pdtypes.is_string_dtype(dtype) and not pdtypes.is_object_dtype(dtype):
         f += ",dtype= 'string'"
 
+    elif pdtypes.is_timedelta64_dtype(dtype):
+        f += ",dtype= 'timedelta64[ns]"
+
     f += ")"
     if tz is None: return f
     return f + ".dt.tz_localize(" + tz + ")"
 
 
 def format_dataframe(df, ignore_index= False):
-    f = _pref() + "DataFrame("
+    f = _pd() + "DataFrame("
 
     f += "{" + prettier
     for col in df:
