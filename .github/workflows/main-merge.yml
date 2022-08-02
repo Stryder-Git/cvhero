@@ -1,3 +1,4 @@
+name: releaser
 on:
   push:
     branches: 
