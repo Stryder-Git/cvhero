@@ -1,7 +1,8 @@
 name: test-runner
 on: 
-  push:
-  pull_request:
+  pull_request: 
+    branches:
+      dev_branch
 
 jobs:
   run-tests:
