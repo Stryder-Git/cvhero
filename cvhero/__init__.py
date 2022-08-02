@@ -7,6 +7,6 @@ def format(obj):
 def clip(obj):
    return copy(format(obj))
 
-
+print("changed")
 
 
