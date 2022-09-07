@@ -4,15 +4,15 @@ on:
     branches: [main]
     
   workflow_dispatch:
+
+env:
+  NEWV: ""
+  OLDV: ""
     
 jobs:
   get_version_number:
     runs-on: ubuntu-latest
-      
-    env:
-      NEWV: ""
-      OLDV: ""
-      
+    
     steps:
       - uses: actions/checkout@v3
       
@@ -32,8 +32,16 @@ jobs:
         run: |  
             sed -i "s/$OLDV/$NEWV/" setup.py
             sed -i "s/$OLDV/$NEWV/" pyproject.toml
-            cat setup.py
-            cat pyproject.toml
         
+  testpypi:
+    needs: get_version_number
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+      - run: | 
+          cat setup.py
+          cat pyproject.toml
+      
       
       
