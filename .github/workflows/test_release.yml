@@ -8,17 +8,26 @@ on:
 jobs:
   get_version_number:
     runs-on: ubuntu-latest
-    
+      
+    env:
+      NEWV: "new"
+      OLDV: ""
+      
     steps:
       - uses: actions/checkout@v3
+      
+      - name: get_new_version
       - run: | 
-          NEWV=$(grep "~" docs/change_log.rst -m1 -a1 | sed 1q | cut -d" " -f1)
+          echo ${{env.NEWV}}
+          NEWV=$(grep "~" docs/change_log.rst -m1 -a1 | sed 1q | cut -d" " -f1) >> 
           echo found version $NEWV
           
+      - name: get_current_version
       - run: | 
           OLDV=$(grep "VERSION" -m1 setup.py | cut -d"=" -f2 | sed "s/['\" ]//g")
           echo current version $OLDV
           
+      - name: verify
       - run: | 
           if [[ $NEWV = $OLDV ]]
           then 
