@@ -20,7 +20,7 @@ jobs:
           echo current version $OLDV
           
       - run: | 
-          if [[ $NEWV == $OLDV ]]
+          if [[ $NEWV = $OLDV ]]
           then 
             echo version needs to be set
           else
