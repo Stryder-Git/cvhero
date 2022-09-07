@@ -18,3 +18,10 @@ jobs:
       - run: | 
           OLDV=$(grep "VERSION" -m1 setup.py | cut -d"=" -f2 | sed "s/['\" ]//g")
           echo current version $OLDV
+          
+      - run: echo is not set
+        if: ${{ NEWV == OLDV }}
+        
+      - run: echo is set
+        if: ${{ NEWV != OLDV }}
+        
