@@ -1,0 +1,17 @@
+
+name: test_release
+on:
+  pull_request:
+    branches: [main]
+    
+  workflow_dispatch:
+    
+jobs:
+  get_version_number:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+      - run: | 
+          VERSION=$(grep "~" docs/change_log.rst -m1 -a1 | sed 1q | cut -d" " -f1)
+          echo found version $VERSION
