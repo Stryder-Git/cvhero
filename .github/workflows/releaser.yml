@@ -1,0 +1,81 @@
+name: releaser
+on:
+  push:
+    branches: [main]
+      
+env:
+  NEWV: ''
+  OLDV: ''
+        
+jobs:
+  run_tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        python-version: ['3.8', '3.9', '3.10']
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - run: | 
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pytest cv_tests
+ 
+  make_release:
+    runs-on: ubuntu-latest
+    needs: run_tests
+    
+    steps:
+      - uses: actions/checkout@v3
+      - run: git branch -vv
+      - name: get_new_version
+        run: | 
+          echo "NEWV=$(grep "~" docs/change_log.rst -m1 -a1 | sed 1q | cut -d" " -f1)" >> $GITHUB_ENV
+          
+      - name: get_current_version
+        run: | 
+          echo "OLDV=$(grep "VERSION" -m1 setup.py | cut -d"=" -f2 | sed "s/['\" ]//g")" >> $GITHUB_ENV
+          
+      - name: verify
+        if: ${{ env.NEWV == env.OLDV }}
+        run: echo you did not update the change_log && exit 1
+      
+      - name: set version
+        run: |  
+            sed -i "s/$OLDV/$NEWV/" setup.py
+            sed -i "s/$OLDV/$NEWV/" pyproject.toml
+            
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install build twine
+          
+      - name: Upload files to PyPI
+        run: python -m twine upload --verbose dist/* -u__token__ -p${{ secrets.PYPI_TOKEN }}
+
+      - name: Install and run tests
+        run: |
+          echo "Will wait 10s" && sleep 10s
+          pip install --no-cache-dir cvhero
+          pip install -r requirements.txt
+          pytest cv_tests
+          pip uninstall -y cvhero
+          
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          file_pattern: setup.py pyproject.toml
+          commit_message: Updated version numbers in setup.py and pyproject.toml
+          
+        
+    
+    
