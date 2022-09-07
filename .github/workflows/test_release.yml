@@ -32,6 +32,7 @@ jobs:
         run: |  
             sed -i "s/$OLDV/$NEWV/" setup.py
             sed -i "s/$OLDV/$NEWV/" pyproject.toml
+            git commit setup.py pyproject.toml -m "GHActions update of version numbers"
         
   testpypi:
     needs: get_version_number
