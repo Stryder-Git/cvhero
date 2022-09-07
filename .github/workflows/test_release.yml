@@ -1,4 +1,3 @@
-
 name: test_release
 on:
   pull_request:
@@ -13,5 +12,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: | 
-          VERSION=$(grep "~" docs/change_log.rst -m1 -a1 | sed 1q | cut -d" " -f1)
-          echo found version $VERSION
+          NEWV=$(grep "~" docs/change_log.rst -m1 -a1 | sed 1q | cut -d" " -f1)
+          echo found version $NEWV
+          
+      - run: | 
+          OLDV=$(grep "VERSION" -m1 setup.py | cut -d"=" -f2 | sed "s/['\" ]//g"
+          echo current version $OLDV
