@@ -49,6 +49,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: | 
+          echo ${{ env.NEWV }}
+          echo $OLDV
+          git branch -vv
+      
+      - run: | 
           cat setup.py
           cat pyproject.toml
       
