@@ -20,8 +20,8 @@ jobs:
           echo current version $OLDV
           
       - run: echo is not set
-        if: ${{ NEWV == OLDV }}
+        if: ${{ $NEWV == $OLDV }}
         
       - run: echo is set
-        if: ${{ NEWV != OLDV }}
+        if: ${{ $NEWV != $OLDV }}
         
