@@ -15,3 +15,11 @@ jobs:
       - run: | 
           echo $VAR
           echo ${{env.VAR}}
+          echo new text >> $VAR
+          echo ${{env.VAR}}
+          
+      - run: echo pass
+        if: ${{env.VAR == "new text"}}
+        
+      - run: echo fail
+        if: ${{env.VAR != "new text"}}
