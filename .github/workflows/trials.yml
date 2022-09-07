@@ -15,7 +15,7 @@ jobs:
       - run: | 
           echo $VAR
           echo ${{env.VAR}}
-          echo new text >> $VAR
+          echo "VAR=new text" >> $GITHUB_ENV
           echo ${{env.VAR}}
           
       - run: echo pass
