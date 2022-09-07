@@ -32,7 +32,13 @@ jobs:
         run: |  
             sed -i "s/$OLDV/$NEWV/" setup.py
             sed -i "s/$OLDV/$NEWV/" pyproject.toml
-            git commit setup.py pyproject.toml -m "GHActions update of version numbers"
+      
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          file_pattern: setup.py pyproject.toml
+          commit_message: Updated version numbers in setup.py and pyproject.toml
+          
+        
         
   testpypi:
     needs: get_version_number
