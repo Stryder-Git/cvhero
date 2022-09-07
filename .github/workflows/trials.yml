@@ -19,7 +19,7 @@ jobs:
           echo ${{env.VAR}}
           
       - run: echo pass
-        if: ${{env.VAR == "new text"}}
+        if: ${{env.VAR == 'new text'}}
         
       - run: echo fail
-        if: ${{env.VAR != "new text"}}
+        if: ${{env.VAR != 'new text'}}
