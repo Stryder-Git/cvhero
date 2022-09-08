@@ -2,8 +2,6 @@
   on:
     pull_request:
       branches: [main]
-    pull_request_target:
-      branches: [main]
       
     workflow_dispatch:
     
@@ -11,28 +9,14 @@
     NEWV: ""
     OLDV: ""
 
-  jobs:
-    wrong_branch:
-      runs-on: ubuntu-latest
-      if: ${{ github.head_ref != 'dev' }}
-      
-      steps:
-        - uses: superbrothers/close-pull-request@v3
-          with:
-            comment: Please re-open this PR against the dev branch. For more information, consult CONTRIBUTING.md.
-        - run: echo PR against master that is not based on dev && exit 1
-        
-        
+  jobs:      
     test_new_release:
       runs-on: ubuntu-latest
       if: ${{ github.head_ref == 'dev' }}
 
       steps:
         - uses: actions/checkout@v3
-
-        - run: git branch -vv
-
-        - name: get_new_curren_version
+        - name: get_new_current_version
           run: | 
             echo "NEWV=$(grep "~" docs/change_log.rst -m1 -a1 | sed 1q | cut -d" " -f1)" >> $GITHUB_ENV
             echo "OLDV=$(grep "VERSION" -m1 setup.py | cut -d"=" -f2 | sed "s/['\" ]//g")" >> $GITHUB_ENV
