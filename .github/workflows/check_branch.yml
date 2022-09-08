@@ -9,14 +9,14 @@
     show_branch:
       runs-on: ubuntu-latest
       steps:
-        - run: echo ${{ github.GITHUB_HEAD_REF }}
-        - run: echo $GITHUB_HEAD_REF
+        - run: echo ${{ github.GITHUB_REF }}
+        - run: echo $GITHUB_REF
   
     check_branch:
       runs-on: ubuntu-latest
 
       steps:
-        - if: ${{ github.GITHUB_HEAD_REF != 'dev' }}
+        - if: ${{ github.GITHUB_REF != 'dev' }}
           uses: superbrothers/close-pull-request@v3
           with:
             comment: Please re-open this PR against the dev branch. For more information, consult CONTRIBUTING.md.
