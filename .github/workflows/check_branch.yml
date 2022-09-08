@@ -13,18 +13,14 @@
             echo ${{github.ref}}
             echo $GITHUB_REF
             
-            echo ${github.GITHUB_HEAD_REF}
+            echo ${{github.head_ref}}
             echo $GITHUB_HEAD_REF
             
-            echo ${github.GITHUB_BASE_REF}
+            echo ${{github.base_ref}}
             echo $GITHUB_BASE_REF
             
-            echo ${github.GITHUB_REF_NAME}
+            echo ${{github.ref_name}}
             echo $GITHUB_REF_NAME
-            
-            echo ${github.GITHUB_HEAD_REF}
-            echo $GITHUB_HEAD_REF
-        
   
     check_branch:
       runs-on: ubuntu-latest
