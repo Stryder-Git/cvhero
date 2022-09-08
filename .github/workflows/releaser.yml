@@ -83,7 +83,7 @@ jobs:
           commit_message: Updated version numbers in setup.py and pyproject.toml
           
       - name: Create Release  
-        id: ${{ env.NEWV }}
+        id: $NEWV
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
