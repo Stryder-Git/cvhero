@@ -2,7 +2,6 @@ name: test_release
 on:
   workflow_run:
     workflows: [check_branch]
-    branches: [main]
     types:
       - completed
     
