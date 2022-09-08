@@ -9,8 +9,22 @@
     show_branch:
       runs-on: ubuntu-latest
       steps:
-        - run: echo ${{ github.GITHUB_REF }}
-        - run: echo $GITHUB_REF
+        - run: | 
+            echo ${{github.ref}}
+            echo $GITHUB_REF
+            
+            echo ${github.GITHUB_HEAD_REF}
+            echo $GITHUB_HEAD_REF
+            
+            echo ${github.GITHUB_BASE_REF}
+            echo $GITHUB_BASE_REF
+            
+            echo ${github.GITHUB_REF_NAME}
+            echo $GITHUB_REF_NAME
+            
+            echo ${github.GITHUB_HEAD_REF}
+            echo $GITHUB_HEAD_REF
+        
   
     check_branch:
       runs-on: ubuntu-latest
