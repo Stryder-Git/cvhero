@@ -90,5 +90,7 @@ jobs:
         with:
           tag_name: ${{ env.NEWV }}
           release_name: Release ${{ env.NEWV }}        
+          body: | 
+            Testing the release ${{ env.NEWV }}
     
     
