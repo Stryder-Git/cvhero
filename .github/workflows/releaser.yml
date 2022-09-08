@@ -69,7 +69,7 @@ jobs:
       - name: Install and run tests
         run: |
           echo "Will wait 10s" && sleep 10s
-          pip install cvhero==$NEWV
+          pip install --extra-index-url https://pypi.org/ cvhero
           pip show cvhero
           pip install -r requirements.txt
           pytest cv_tests
