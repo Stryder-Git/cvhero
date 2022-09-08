@@ -8,6 +8,10 @@ Updates
 ~~~~~~~~~~~~~~~~
 - another release
 
+0.1.4 (01/02/22)
+~~~~~~~~~~~~~~~~
+- another release
+
 0.1.3 (01/02/22)
 ~~~~~~~~~~~~~~~~
 - another release
