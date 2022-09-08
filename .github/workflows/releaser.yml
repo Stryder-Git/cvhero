@@ -89,7 +89,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: v${{ env.NEWV }}
-          release_name: Release v${{ + env.NEWV }}     
+          release_name: Release v${{ env.NEWV }}     
           body: | 
             Testing the release v${{ env.NEWV }}
     
