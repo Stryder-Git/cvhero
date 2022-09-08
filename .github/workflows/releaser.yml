@@ -82,6 +82,13 @@ jobs:
           file_pattern: setup.py pyproject.toml
           commit_message: Updated version numbers in setup.py and pyproject.toml
           
-        
+      - name: Create Release  
+        id: ${{ env.NEWV }}
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ env.NEWV }}
+          release_name: Release ${{ env.NEWV }}        
     
     
