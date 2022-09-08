@@ -69,7 +69,7 @@ jobs:
       - name: Install and run tests
         run: |
           echo "Will wait 30s" && sleep 30s
-          pip install --extra-index-url https://pypi.org/ cvhero
+          pip install cvhero
           pip show cvhero
           pip install -r requirements.txt
           pytest cv_tests
