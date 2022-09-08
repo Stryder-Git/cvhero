@@ -69,7 +69,8 @@ jobs:
       - name: Install and run tests
         run: |
           echo "Will wait 10s" && sleep 10s
-          pip install --no-cache-dir cvhero
+          pip install cvhero==$NEWV
+          pip show cvhero
           pip install -r requirements.txt
           pytest cv_tests
           pip uninstall -y cvhero
