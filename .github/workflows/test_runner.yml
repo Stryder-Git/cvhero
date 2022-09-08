@@ -1,7 +1,7 @@
 name: test_runner
 on: 
   pull_request: 
-    branches: [main, dev_branch]
+    branches: [main, dev]
   workflow_dispatch:
   
 jobs:
