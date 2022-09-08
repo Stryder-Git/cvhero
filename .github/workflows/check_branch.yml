@@ -6,6 +6,11 @@
     workflow_dispatch:
   
   jobs:
+    show_branch:
+      runs-on: ubuntu-latest
+      steps:
+        - run: echo ${{ env.GITHUB_HEAD_REF }}
+  
     check_branch:
       runs-on: ubuntu-latest
 
