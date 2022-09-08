@@ -4,6 +4,10 @@ Some stuff
 
 Updates
 ---------
+0.1.5 (01/02/22)
+~~~~~~~~~~~~~~~~
+- another release
+
 0.1.4 (01/02/22)
 ~~~~~~~~~~~~~~~~
 - another release
