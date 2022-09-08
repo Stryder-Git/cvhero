@@ -1,4 +1,4 @@
-print("changed")
+print("changes")
 
 from .pandas_printer import format_pandas
 from pyperclip import copy
