@@ -13,10 +13,10 @@
         
     check_branch:
       runs-on: ubuntu-latest
-
+      if: ${{ github.head_ref != 'dev' }}
+      
       steps:
-        - if: ${{ github.head_ref != 'dev' }}
-          uses: superbrothers/close-pull-request@v3
+        - uses: superbrothers/close-pull-request@v3
           with:
             comment: Please re-open this PR against the dev branch. For more information, consult CONTRIBUTING.md.
 
