@@ -80,17 +80,12 @@ jobs:
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           file_pattern: setup.py pyproject.toml
-          commit_message: Updated version numbers in setup.py and pyproject.toml
+          commit_message: '[GH-Actions] updated verrsion numbers in setup.py and pyproject.toml'
           
       - name: Create Release  
-        id: v${{ env.NEWV }}
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: softprops/action-gh-release@v1
         with:
+          name: v${{ env.NEWV }}
           tag_name: v${{ env.NEWV }}
-          release_name: Release v${{ env.NEWV }}     
-          body: | 
-            Testing the release v${{ env.NEWV }}
     
     
