@@ -25,5 +25,5 @@ jobs:
       
       - run: echo $VAR
         env:
-          VAR: v${{env.VAR}}
+          VAR: v${{ env.VAR }}
     
