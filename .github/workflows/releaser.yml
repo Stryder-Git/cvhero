@@ -33,7 +33,7 @@ jobs:
       - name: extract total coverage
         run: |
           echo "NEWCOVER=$(grep "TOTAL" coverage.txt | tr -s " " | cut -d" " -f4)" >> $GITHUB_ENV
-          echo $NEWCOVER
+      - run: echo $NEWCOVER
           
   make_release:
     runs-on: ubuntu-latest
