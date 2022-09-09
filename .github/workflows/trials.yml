@@ -25,5 +25,5 @@ jobs:
       
       - run: echo $VAR
         env:
-          VAR: "other text"
+          VAR: v${{env.VAR}}
     
