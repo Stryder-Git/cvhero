@@ -1,4 +1,4 @@
-print("dss")
+print("ds")
 
 from .pandas_printer import format_pandas
 from pyperclip import copy
