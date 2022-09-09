@@ -21,12 +21,10 @@ jobs:
       - run: |
           python --version
           pip install -r requirements.txt
-          pip install coveralls
-          coverage run -m pytest cv_tests
-          coverage lcov -o coverage.lcov
+          pip install pytest pytest-cov
+          pytest --cov cv_tests > coverage.txt
       
-      - name: coveralls
-        uses: coverallsapp/github-action@master
+      - name: Coverage
+        uses: coroo/pytest-coverage-commentator@v1.0.2
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          path-to-lcov: coverage.lcov
+          pytest-coverage: coverage.txt
