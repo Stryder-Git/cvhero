@@ -18,6 +18,8 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - run: python --version
-      - run: pip install -r requirements.txt
-      - run: pytest cv_tests
+      - run: |
+          python --version
+          pip install -r requirements.txt
+          pip install coveralls
+          coverage run -m pytest cv_tests
