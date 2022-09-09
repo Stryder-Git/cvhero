@@ -28,13 +28,6 @@ jobs:
           VAR: v${{ env.VAR }}
     
       - name: Create Release  
-        id: vnew
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: softprops/action-gh-release@v1
         with:
-          tag_name: v${{ env.VAR }}
-          release_name: Release v${{ env.VAR }}     
-          body: | 
-            Testing the release v${{ env.VAR }}
-    
+          name: v${{ env.VAR }}
