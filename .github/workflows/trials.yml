@@ -31,3 +31,4 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           name: v${{ env.VAR }}
+          tag_name: v${{ env.VAR }}
