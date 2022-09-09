@@ -17,6 +17,18 @@ jobs:
         python-version: ['3.8', '3.9', '3.10']
 
     steps:
+      - name: get latest coverage
+        uses: actions/download-artifact@v3
+        with:
+          name: latest_coverage
+      
+      - name: set min coverage env
+        run: | 
+          echo "OLDCOVER=$(cat OLDCOVER.txt)" >> $GITHUB_ENV
+        
+      - if: ${{ env.OLDCOVER >= 99 }}
+        run: echo "OLDCOVER=99" >> $GITHUB_ENV
+        
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
         with:
