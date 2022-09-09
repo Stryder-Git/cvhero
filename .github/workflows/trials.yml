@@ -28,6 +28,8 @@ jobs:
           VAR: v${{ env.VAR }}
     
       - name: Create Release  
+        env:
+          VAR: 0.0.1
         uses: softprops/action-gh-release@v1
         with:
           name: v${{ env.VAR }}
