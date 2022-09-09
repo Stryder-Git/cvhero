@@ -25,4 +25,4 @@ jobs:
           coverage run -m pytest cv_tests
       
       - name: coveralls
-        uses: AndreMiras/coveralls-python-action@develop
+        uses: coverallsapp/github-action@master
