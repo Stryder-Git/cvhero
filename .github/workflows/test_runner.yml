@@ -23,3 +23,6 @@ jobs:
           pip install -r requirements.txt
           pip install coveralls
           coverage run -m pytest cv_tests
+      
+      - name: coveralls
+        uses: AndreMiras/coveralls-python-action@develop
