@@ -28,7 +28,7 @@ jobs:
           VAR: v${{ env.VAR }}
     
       - name: Create Release  
-        id: v${{ env.VAR }}
+        id: vnew
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
