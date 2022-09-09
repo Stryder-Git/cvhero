@@ -27,3 +27,14 @@ jobs:
         env:
           VAR: v${{ env.VAR }}
     
+      - name: Create Release  
+        id: v${{ env.VAR }}
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ env.VAR }}
+          release_name: Release v${{ env.VAR }}     
+          body: | 
+            Testing the release v${{ env.VAR }}
+    
