@@ -24,3 +24,6 @@ jobs:
         if: ${{env.VAR != 'new text'}}
       
       - run: echo $VAR
+        env:
+          VAR: "other text"
+    
