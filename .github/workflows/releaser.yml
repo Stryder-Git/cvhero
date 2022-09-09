@@ -6,7 +6,6 @@ on:
 env:
   NEWV: ''
   OLDV: ''
-  NEWCOVER: 0
   OLDCOVER: 0
         
 jobs:
@@ -32,8 +31,13 @@ jobs:
       
       - name: extract total coverage
         run: |
-          echo "NEWCOVER=$(grep "TOTAL" coverage.txt | tr -s " " | cut -d" " -f4)" >> $GITHUB_ENV
-      - run: echo $NEWCOVER
+          grep "TOTAL" coverage.txt | tr -s " " | cut -d" " -f4) > OLDCOVER.txt
+          
+      - name: save new total coverage
+        uses: actions/upload-artifact@v3
+        with:
+          name: latest_coverage
+          path: OLDCOVER.txt
           
   make_release:
     runs-on: ubuntu-latest
