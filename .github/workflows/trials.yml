@@ -13,12 +13,7 @@ jobs:
     env:
       NEWV: ''
       OLDV: ''
-      HEADER: | 
-        Change Log
-        ==========
-
-        Updates
-        -------
+      HEADER: 'Change Log\n==========\nUpdates\n-------\n'
     
     steps:
       - uses: actions/checkout@v3
