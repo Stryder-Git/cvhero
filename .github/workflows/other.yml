@@ -2,26 +2,19 @@ name: other
 
 on:
   workflow_dispatch:
-  
+
+env:
+  var: '12'
   
 jobs:
-  upload_artifact:
+  try:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "hello world" > artifact.txt
-      - uses: actions/upload-artifact@v3
-        with:
-          name: artifact
-          path: artifact.txt
-          
-  download_artifact:
-    needs: upload_artifact
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/download-artifact@v3
-        with:
-          name: artifact
-      - run: cat artifact.txt
+      - if: ${{ env.var > 10 }}
+        run: echo 'greater than 10 int'
       
+      - if: ${{ env.var > '10' }}
+        run: echo 'greater than 10 string'
+        
       
   
