@@ -79,6 +79,7 @@ jobs:
           github-token: ${{ secrets.github_token }}
           flag-name: test_${{matrix.os}}_${{matrix.python-version}}
           parallel: true
+          path-to-lcov: coverage.lcov
   
   finalize_tests:
     needs: run_tests
