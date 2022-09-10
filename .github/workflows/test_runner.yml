@@ -4,11 +4,6 @@ on:
     branches: [main, dev]
   workflow_call:
   workflow_dispatch:
-  
-
-env:
-  MINCOVER: '0'
-
     
 jobs:
   run_tests:
@@ -34,10 +29,7 @@ jobs:
           pip install -r requirements.txt
           
       - name: run tests
-        run: |
-          # echo testing with min coverage: $OLDCOVER
-          # pytest --cov=cvhero --cov-fail-under=$OLDCOVER cv_tests > coverage.txt
-          
+        run: |          
           coverage run --source=cvhero -m pytest cv_tests
           coverage lcov -o coverage.lcov
           
@@ -77,7 +69,7 @@ jobs:
           name: latest_coverage
           workflow: releaser.yml
       
-      - name: set min coverage env
+      - name: set min coverage
         run: | 
           echo "OLDCOVER=$(cat OLDCOVER.txt)" >> $GITHUB_ENV
           cat OLDCOVER.txt
