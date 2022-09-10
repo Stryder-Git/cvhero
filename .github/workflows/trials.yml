@@ -6,11 +6,4 @@ on:
   
 jobs:
   trial:
-    runs-on: ubuntu-latest
-    
-    steps:
-      - run: echo "0" > OLDCOVER.txt
-      - uses: actions/upload-artifact@v3
-        with:
-          name: latest_coverage
-          path: OLDCOVER.txt      
+    uses: ./.github/workflows/other.yml

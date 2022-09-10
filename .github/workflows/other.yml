@@ -2,19 +2,20 @@ name: other
 
 on:
   workflow_dispatch:
+  workflow_call:
 
 env:
   var: '12'
   
 jobs:
-  try:
+  other_job:
     runs-on: ubuntu-latest
     steps:
-      - uses: dawidd6/action-download-artifact@v2
-        with:
-          name: latest_coverage
-          workflow: trials.yml
-
-      - run: cat OLDCOVER.txt
+      - run: echo "other job 1"
+    
+  other_job2:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "other job 2"
         
   
