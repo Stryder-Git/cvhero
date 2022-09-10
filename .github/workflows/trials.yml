@@ -51,7 +51,7 @@ jobs:
             
       - name: create change log
         run: | 
-          echo "$NEWV (${{ steps.date.outputs.date }})\n~~~~~~~~~~~~~~${{ steps.changes.outputs.change_log }}"
+          echo "$NEWV (${{ steps.date.outputs.date }})\n~~~~~~~~~~~~~~'${{ steps.changes.outputs.change_log }}'"
           # sed -i "s/
           
         
