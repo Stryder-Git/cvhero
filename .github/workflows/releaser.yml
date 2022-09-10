@@ -20,6 +20,7 @@ jobs:
   #       path: OLDCOVER.txt     
   
   get_latest_coverage:
+    if: ${{ 0 == 1}}
     runs-on: ubuntu-latest
     steps:
       - name: get latest coverage
@@ -34,42 +35,74 @@ jobs:
           cat OLDCOVER.txt
         
       - if: ${{ env.OLDCOVER >= '99' }}
-        run: echo "OLDCOVER=99" >> $GITHUB_ENV
-    
+        run: echo 99 > OLDCOVER.txt
+      
+      - uses: actions/upload-artifact@v3
+        with:
+          name: min_coverage
+          path: OLDCOVER.txt
 
   run_tests:
-    needs: get_latest_coverage
+    # needs: get_latest_coverage
     runs-on: ubuntu-latest
     strategy:
       matrix:
         os: [ubuntu-latest]
         python-version: ['3.8', '3.9', '3.10']
+        
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    steps:       
+    steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
-
-      - name: run tests
+      
+     # - name: get min coverage
+     #   uses: actions/download-artifact@v3
+     #   with:
+     #     name: min_coverage
+      
+    #  - name: set min coverage
+    #    run: |
+    #      echo "OLDCOVER=$(cat OLDCOVER.txt)" >> $GITHUB_ENV
+    #      cat OLDCOVER.txt    
+      
+      - name: install dependencies
         run: | 
           python -m pip install --upgrade pip
-          pip install pytest pytest-cov
+          pip install pytest coveralls
           pip install -r requirements.txt
-          pytest --cov --cov-fail-under=$OLDCOVER cv_tests > coverage.txt
-      
-      - name: extract total coverage
+          
+      - name: run tests
         run: |
-          grep "TOTAL" coverage.txt | tr -s " " | cut -d" " -f4 | sed 's/%//' > OLDCOVER.txt
-          
-      - name: save new total coverage
-        uses: actions/upload-artifact@v3
+          # echo testing with min coverage: $OLDCOVER
+          # pytest --cov=cvhero --cov-fail-under=$OLDCOVER cv_tests > coverage.txt
+          coverage run --source=cvhero -m pytest cv_tests
+          coverage lcov -o coverage.lcov
+      
+      - name: coveralls parallel
+        uses: coverallsapp/github-action@master
         with:
-          name: latest_coverage
-          path: OLDCOVER.txt
-          
-  make_release:
+          github-token: ${{ secrets.github_token }}
+          flag-name: test_${{matrix.os}}_${{matrix.python-version}}
+          parallel: true
+          path-to-lcov: coverage.lcov
+  
+  finalize_tests:
     needs: run_tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: coveralls finalize
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{secrets.github_token}}
+          parallel-finished: true
+          path-to-lcov: coverage.lcov
+      
+  make_release:
+    needs: finalize_tests
     runs-on: ubuntu-latest   
     steps:
       - uses: actions/checkout@v3
