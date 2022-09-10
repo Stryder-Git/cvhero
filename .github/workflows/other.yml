@@ -10,16 +10,10 @@ jobs:
   try:
     runs-on: ubuntu-latest
     steps:
-      - if: ${{ env.var > 10 }}
-        run: echo 'greater than 10 int'
-      
-      - if: ${{ env.var > '10' }}
-        run: echo 'greater than 10 string'
-        
-      - if: ${{ env.var < 13 }}
-        run: echo 'lower than 13 int'
-      
-      - if: ${{ env.var < '13' }}
-        run: echo 'lower than 13 string'
+      - uses: actions/download-artifact@v3
+        with:
+          name: latest_coverage
+          path: OLDCOVER.txt
+      - run: cat OLDCOVER.txt
         
   
