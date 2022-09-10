@@ -6,19 +6,29 @@ on:
   
 jobs:
   trial:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest    
     steps:
       - uses: actions/checkout@v1
 
-      - name: read yaml
-        id: yaml-data
+      - name: get new_version
+        id: new_version
         uses: KJ002/read-yaml@1.6      
         with:
           file: .github/config_new_release.yml         
-          key-path: '["new_release"]' # Access the runs key then the using key and retuns the value.
+          key-path: '["new_release", "new_version"]' # Access the runs key then the using key and retuns the value.
 
-      - name: Display read-yaml output
-        run: | 
-          echo "${{ steps.yaml-data.outputs.data }}"
-          echo "${{ steps.yaml-data.outputs.data.new_version }}"
+      - name: Display new_version
+        run: echo "${{ steps.new_version.outputs.data }}"
+      
+      
+      - name: get change_log
+        id: change_log
+        uses: KJ002/read-yaml@1.6      
+        with:
+          file: .github/config_new_release.yml         
+          key-path: '["new_release", "change_log"]' # Access the runs key then the using key and retuns the value.
+
+      - name: Display new_version
+        run: echo "${{ steps.change_log.outputs.data }}"
+      
 
