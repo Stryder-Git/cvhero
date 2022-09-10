@@ -6,16 +6,11 @@ on:
 env:
   NEWV: ''
   OLDV: ''
-  OLDCOVER: 0
+  OLDCOVER: '0'
         
 jobs:
-  run_tests:
+  get_latest_coverage:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-        python-version: ['3.8', '3.9', '3.10']
-
     steps:
       - name: get latest coverage
         uses: actions/download-artifact@v3
@@ -26,9 +21,19 @@ jobs:
         run: | 
           echo "OLDCOVER=$(cat OLDCOVER.txt)" >> $GITHUB_ENV
         
-      - if: ${{ env.OLDCOVER >= 99 }}
+      - if: ${{ env.OLDCOVER >= '99' }}
         run: echo "OLDCOVER=99" >> $GITHUB_ENV
-        
+    
+
+  run_tests:
+    needs: get_latest_coverage
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        python-version: ['3.8', '3.9', '3.10']
+
+    steps:       
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
         with:
@@ -43,21 +48,24 @@ jobs:
       
       - name: extract total coverage
         run: |
-          grep "TOTAL" coverage.txt | tr -s " " | cut -d" " -f4) > OLDCOVER.txt
+          grep "TOTAL" coverage.txt | tr -s " " | cut -d" " -f4 | sed 's/%//') > OLDCOVER.txt
           
       - name: save new total coverage
         uses: actions/upload-artifact@v3
         with:
           name: latest_coverage
           path: OLDCOVER.txt
+      
+      - name: Coverage  
+        uses: coroo/pytest-coverage-commentator@v1.0.2
+        with:
+          pytest-coverage: coverage.txt
           
   make_release:
-    runs-on: ubuntu-latest
     needs: run_tests
-    
+    runs-on: ubuntu-latest   
     steps:
       - uses: actions/checkout@v3
-      - run: git branch -vv
       - name: get_new_version
         run: | 
           echo "NEWV=$(grep "~" docs/change_log.rst -m1 -a1 | sed 1q | cut -d" " -f1)" >> $GITHUB_ENV
