@@ -9,17 +9,14 @@ env:
 jobs:
   trial:
     runs-on: ubuntu-latest    
-    steps:
-      - uses: actions/checkout@v1
-
-      - name: get new_version
-        uses: KJ002/read-yaml@1.6
-        id: min_coverage
-        with:
-          file: .github/config_new_release.yml
-          key-path: '["_MIN_COVERAGE"]'
+    steps:      
         
-      - run: echo ${{ steps.min_coverage.outputs.data - '2'}}
+      - if: ${{ '0.1.0' > '0.10.1' }}
+        run: echo greater
+        
+      - if: ${{ '0.1.0' < '0.10.1' }}
+        run: echo smaller
+        
       
         
 
