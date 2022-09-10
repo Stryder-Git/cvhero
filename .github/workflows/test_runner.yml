@@ -3,15 +3,17 @@ on:
   pull_request: 
     branches: [main, dev]
   workflow_dispatch:
-  
+
 env:
-    OLDCOVER: '0'
-  
+  OLDCOVER: '0'
+
+    
 jobs:
   get_latest_coverage:
     runs-on: ubuntu-latest
     steps:
-      - name: get latest coverage
+      # gets the coverage of the latest release, as it was saved by releaser.yml
+      - name: get latest coverage 
         uses: dawidd6/action-download-artifact@v2
         with:
           name: latest_coverage
@@ -23,7 +25,12 @@ jobs:
           cat OLDCOVER.txt
           
       - if: ${{ env.OLDCOVER >= '99' }}
-        run: echo "OLDCOVER=99" >> $GITHUB_ENV
+        run: echo 99 > OLDCOVER.txt
+      
+      - uses: actions/upload-artifact@v3
+        with:
+          name: min_coverage
+          path: OLDCOVER.txt
     
 
   run_tests:
@@ -34,12 +41,22 @@ jobs:
         os: [ubuntu-latest]
         python-version: ['3.8', '3.9', '3.10']
 
-    steps:       
+    steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
-
+      
+      - name: get min coverage
+        uses: actions/download-artifact@v3
+        with:
+          name: min_coverage
+      
+      - name: set min coverage
+        run: |
+          echo "OLDCOVER=$(cat OLDCOVER.txt)" >> $GITHUB_ENV
+          cat OLDCOVER.txt    
+      
       - name: install dependencies
         run: | 
           python -m pip install --upgrade pip
