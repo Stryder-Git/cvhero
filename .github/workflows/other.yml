@@ -20,7 +20,6 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: artifact
-          path: artifact.txt
       - run: cat artifact.txt
       
       
