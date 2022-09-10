@@ -32,6 +32,7 @@ jobs:
         run: |          
           coverage run --source=cvhero -m pytest cv_tests
           coverage lcov -o coverage.lcov
+          coverage report -m > pytest-coverage.txt          
           
       - name: coveralls parallel
         uses: coverallsapp/github-action@master
@@ -71,8 +72,6 @@ jobs:
           
       - name: extract coverage
         run: |
-          pip install coveralls
-          coverage report -m > pytest-coverage.txt
           echo "COV=$(grep "TOTAL" pytest-coverage.txt | tr -s " " | cut -d" " -f4 | sed 's/%//')" >> $GITHUB_ENV
           echo $COV
           
