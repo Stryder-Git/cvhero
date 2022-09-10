@@ -13,7 +13,7 @@ jobs:
     env:
       NEWV: ''
       OLDV: ''
-      HEADER: 'Change Log\n==========\nUpdates\n-------\n'
+      SEP: '-------' # used to adjust the change_log
     
     steps:
       - uses: actions/checkout@v3
@@ -37,11 +37,10 @@ jobs:
         run: |  
             sed -i "s/$OLDV/$NEWV/" setup.py
             sed -i "s/$OLDV/$NEWV/" pyproject.toml
-            sed -i "s/$HEADER//" docs/change_log.rst
                         
       - name: Get current date
         id: date
-        run: echo "::set-output name=date::$(date +'%m-%d-%Y')"
+        run: echo "::set-output name=date::$(date +'%m/%d/%Y')"
       
       - name: Get changes
         id: changes
@@ -52,9 +51,8 @@ jobs:
         
       - name: create change log
         run: | 
-          echo $HEADER\n$NEWV (${{ steps.date.outputs.date }})\n~~~~~~~~~~~~~~\n > templog.rst
-          cat docs/change_log.rst >> templog.rst
-          mv templog.rst docs/change_log.rst
+          echo $NEWV (${{ steps.date.outputs.date }})\n~~~~~~~~~~~~~~\n
+          # sed -i "s/
           
         
           
