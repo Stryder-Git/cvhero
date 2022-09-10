@@ -8,29 +8,9 @@ jobs:
   trial:
     runs-on: ubuntu-latest
     
-    env:
-      VAR: "text"
-    
     steps:
-      - run: | 
-          echo $VAR
-          echo ${{env.VAR}}
-          echo "VAR=new text" >> $GITHUB_ENV
-          
-      - run: echo pass
-        if: ${{env.VAR == 'new text'}}
-        
-      - run: echo fail
-        if: ${{env.VAR != 'new text'}}
-      
-      - run: echo $VAR
-        env:
-          VAR: v${{ env.VAR }}
-    
-      - name: Create Release  
-        env:
-          VAR: 0.0.1
-        uses: softprops/action-gh-release@v1
+      - run: echo "0%" > OLDCOVER.txt
+      - uses: actions/upload-artifact@v3
         with:
-          name: v${{ env.VAR }}
-          tag_name: v${{ env.VAR }}
+          name: latest_coverage
+          path: OLDCOVER.txt      
