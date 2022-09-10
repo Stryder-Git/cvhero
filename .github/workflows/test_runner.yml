@@ -10,6 +10,7 @@ env:
     
 jobs:
   get_latest_coverage:
+    if: ${{ 0 == 1 }}
     runs-on: ubuntu-latest
     steps:
       # gets the coverage of the latest release, as it was saved by releaser.yml
@@ -50,15 +51,15 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       
-      - name: get min coverage
-        uses: actions/download-artifact@v3
-        with:
-          name: min_coverage
+    #  - name: get min coverage
+    #    uses: actions/download-artifact@v3
+    #    with:
+    #      name: min_coverage
       
-      - name: set min coverage
-        run: |
-          echo "OLDCOVER=$(cat OLDCOVER.txt)" >> $GITHUB_ENV
-          cat OLDCOVER.txt    
+     # - name: set min coverage
+     #   run: |
+     #     echo "OLDCOVER=$(cat OLDCOVER.txt)" >> $GITHUB_ENV
+     #     cat OLDCOVER.txt    
       
       - name: install dependencies
         run: | 
@@ -68,8 +69,9 @@ jobs:
           
       - name: run tests
         run: |
-          echo testing with min coverage: $OLDCOVER
+          # echo testing with min coverage: $OLDCOVER
           # pytest --cov=cvhero --cov-fail-under=$OLDCOVER cv_tests > coverage.txt
+          
           coverage run --source=cvhero -m pytest cv_tests
           coverage lcov -o coverage.lcov
       
