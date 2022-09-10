@@ -51,7 +51,8 @@ jobs:
         run: echo '${{ steps.changes.outputs.data }}'
             
       - name: create change log
-        run: echo "NEW=$($NEWV (${{ steps.date.outputs.date }})\n~~~~~~~~~~~~~~${{ steps.changes.outputs.change_log }})" >> $GITHUB_ENV
+        run: | 
+          echo "NEW="$($NEWV (${{ steps.date.outputs.date }})\n~~~~~~~~~~~~~~${{ steps.changes.outputs.data }})" >> $GITHUB_ENV
       
       - run: echo $NEW
           
