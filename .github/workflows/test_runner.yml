@@ -35,7 +35,7 @@ jobs:
     
 
   run_tests:
-    needs: get_latest_coverage
+    # needs: get_latest_coverage
     runs-on: ubuntu-latest
     strategy:
       matrix:
