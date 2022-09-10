@@ -10,10 +10,11 @@ jobs:
   try:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/download-artifact@v3
+      - uses: dawidd6/action-download-artifact@v3
         with:
           name: latest_coverage
-          path: OLDCOVER.txt
+          workflow: trials.yml
+
       - run: cat OLDCOVER.txt
         
   
