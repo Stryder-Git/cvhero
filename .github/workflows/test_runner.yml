@@ -72,7 +72,7 @@ jobs:
       - name: extract coverage
         run: |
           coverage report -m > pytest-coverage.txt
-          echo "COV=$(grep "TOTAL" coverage.txt | tr -s " " | cut -d" " -f4 | sed 's/%//')" >> $GITHUB_ENV
+          echo "COV=$(grep "TOTAL" pytest-coverage.txt | tr -s " " | cut -d" " -f4 | sed 's/%//')" >> $GITHUB_ENV
           echo $COV
           
       - name: report coverage
