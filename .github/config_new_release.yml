@@ -1,12 +1,16 @@
 
 new_version: '0.0.2'
 
-change_log: 'test change'
-
-release_body: 'test body'
-
-
+change_log: 
+  - test change
+  - and another change
 
 
-_MIN_COVERAGE: '0'  # Do not change manually
+release_body: |
+  this is a release body giving the option of 
+  describing the new release in more detail
+
+
+## DO NOT CHANGE THIS MANUALLY
+_MIN_COVERAGE: '0'  
 
