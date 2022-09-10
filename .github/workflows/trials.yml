@@ -40,6 +40,8 @@ jobs:
         id: date
         run: echo "::set-output name=date::$(date +'%m/%d/%Y')"
       
+      - run: echo ${{steps.date.outputs.date}}
+      
       - name: Get changes
         id: changes
         uses: KJ002/read-yaml@1.6      
@@ -52,7 +54,9 @@ jobs:
             
       - name: create change log
         run: | 
-          echo "NEW=$($NEWV '(${{ steps.date.outputs.date }})'\n~~~~~~~~~~~~~~\n${{ steps.changes.outputs.data }})" >> $GITHUB_ENV
+          echo "NEW=${{ join([env.NEWV, ' ', steps.date.outputs.date, '\n']) }}" >> GITHUB_ENV
+          
+          # $($NEWV '(${{ steps.date.outputs.date }})'\n~~~~~~~~~~~~~~\n${{ steps.changes.outputs.data }})"
       
       - run: echo $NEW
           
