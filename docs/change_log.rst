@@ -3,7 +3,7 @@ Some stuff
 	other stuff
 
 Updates
----------
+-------
 0.1.17 (01/02/22)
 ~~~~~~~~~~~~~~~~
 - another release
