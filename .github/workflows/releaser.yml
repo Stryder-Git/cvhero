@@ -59,7 +59,7 @@ jobs:
       
       - name: extract total coverage
         run: |
-          grep "TOTAL" coverage.txt | tr -s " " | cut -d" " -f4 | sed 's/%//') > OLDCOVER.txt
+          grep "TOTAL" coverage.txt | tr -s " " | cut -d" " -f4 | sed 's/%//' > OLDCOVER.txt
           
       - name: save new total coverage
         uses: actions/upload-artifact@v3
