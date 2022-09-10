@@ -3,6 +3,8 @@ name: trials
 on:
   workflow_dispatch:
   
+env:
+  var: '2'
   
 jobs:
   trial:
@@ -11,24 +13,12 @@ jobs:
       - uses: actions/checkout@v1
 
       - name: get new_version
-        id: new_version
-        uses: KJ002/read-yaml@1.6      
+        id: min_coverage
         with:
-          file: .github/config_new_release.yml         
-          key-path: '["new_version"]' # Access the runs key then the using key and retuns the value.
-
-      - name: Display new_version
-        run: echo "${{ steps.new_version.outputs.data }}"
+          file: .github/config_new_release.yml
+          key-path: '["_MIN_COVERAGE"]'
+        
+      - run: echo ${{ steps.min_coverage.outputs.data - '2'}}
       
-      
-      - name: get change_log
-        id: change_log
-        uses: KJ002/read-yaml@1.6      
-        with:
-          file: .github/config_new_release.yml         
-          key-path: '["change_log"]' # Access the runs key then the using key and retuns the value.
-
-      - name: Display new_version
-        run: echo "${{ steps.change_log.outputs.data }}"
-      
+        
 
