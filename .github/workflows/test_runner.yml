@@ -71,4 +71,22 @@ jobs:
           echo testing with min coverage: $OLDCOVER
           # pytest --cov=cvhero --cov-fail-under=$OLDCOVER cv_tests > coverage.txt
           coverage run --source=cvhero -m pytest cv_tests
-          coveralls          
+      
+      - name: coveralls parallel
+        uses: coverallsapp/github-actions@master
+        with:
+          github-token: ${{ secrets.github_token }}
+          flag-name: test_${{matrix.os}}_${{matrix.python-version}}
+          parallel: true
+  
+  finalize_tests:
+    needs: run_tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: coveralls finalize
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{secrets.github_token}}
+          parallel-finished: true
+
+      
