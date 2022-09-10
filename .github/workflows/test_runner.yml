@@ -71,6 +71,7 @@ jobs:
           echo testing with min coverage: $OLDCOVER
           # pytest --cov=cvhero --cov-fail-under=$OLDCOVER cv_tests > coverage.txt
           coverage run --source=cvhero -m pytest cv_tests
+          coverage lcov -o coverage.lcov
       
       - name: coveralls parallel
         uses: coverallsapp/github-action@master
@@ -88,5 +89,5 @@ jobs:
         with:
           github-token: ${{secrets.github_token}}
           parallel-finished: true
-
+          path-to-lcov: coverage.lcov
       
