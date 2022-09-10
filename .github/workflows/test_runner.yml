@@ -82,13 +82,13 @@ jobs:
           name: coverage
           
       - name: extract coverage
-        run: |
-          echo "COV=$(grep "TOTAL" pytest-coverage.txt | tr -s " " | cut -d" " -f4 | sed 's/%//')" >> $GITHUB_ENV
-          echo $COV
-          
+        run: echo "COV=$(grep "TOTAL" pytest-coverage.txt | tr -s " " | cut -d" " -f4 | sed 's/%//')" >> $GITHUB_ENV
+      
+      - run: echo $COV
+      
       - name: report coverage
         uses: coroo/pytest-coverage-commentator@v1.0.2
-      
+            
       - name: failed coverage
         if: ${{ env.COV < steps.min_coverage.outputs.data }}
         run: echo below last released coverage && exit 1
