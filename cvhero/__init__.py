@@ -23,6 +23,10 @@ def func():
     print("dssss")
     print("dssss")
     print("dssss")
+    print("dssss")
+    print("dssss")
+    print("dssss")
+    print("dssss")
 
 
 
