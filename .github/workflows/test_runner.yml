@@ -32,7 +32,13 @@ jobs:
         run: |          
           coverage run --source=cvhero -m pytest cv_tests
           coverage lcov -o coverage.lcov
-          coverage report -m > pytest-coverage.txt          
+          coverage report -m > pytest-coverage.txt       
+          
+      - name: save coverage
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage
+          path: pytest-coverage.txt
           
       - name: coveralls parallel
         uses: coverallsapp/github-action@master
@@ -69,6 +75,11 @@ jobs:
         with:
           file: .github/config_new_release.yml         
           key-path: '["_MIN_COVERAGE"]'
+      
+      - name: get this coverage
+        uses: actions/download-artifact@v3
+        with:
+          name: coverage
           
       - name: extract coverage
         run: |
