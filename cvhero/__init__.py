@@ -1,11 +1,3 @@
-print("dss")
-
-def func():
-    print()
-    print()
-    print()
-    print()
-
 from .pandas_printer import format_pandas
 from pyperclip import copy
 
