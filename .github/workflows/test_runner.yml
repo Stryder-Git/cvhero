@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 
 env:
-  OLDCOVER: '0'
+  MINCOVER: '0'
 
     
 jobs:
@@ -22,20 +22,23 @@ jobs:
       
       - name: set min coverage env
         run: | 
-          echo "OLDCOVER=$(cat OLDCOVER.txt)" >> $GITHUB_ENV
-          cat OLDCOVER.txt
+          echo "MINCOVER=$(cat OLDCOVER.txt)" >> $GITHUB_ENV
+          cat MINCOVER.txt
           
-      - if: ${{ env.OLDCOVER >= '99' }}
-        run: echo 99 > OLDCOVER.txt
+      - if: ${{ env.MINCOVER >= '99' }}
+        run: echo 99 > MINCOVER.txt
+        
+      - if: ${{ env.MINCOVER < '99' }}
+        run: echo $MINCOVER > MINCOVER.txt
       
       - uses: actions/upload-artifact@v3
         with:
           name: min_coverage
-          path: OLDCOVER.txt
+          path: MINCOVER.txt
     
 
   run_tests:
-    # needs: get_latest_coverage
+    needs: get_latest_coverage
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -51,15 +54,15 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       
-    #  - name: get min coverage
-    #    uses: actions/download-artifact@v3
-    #    with:
-    #      name: min_coverage
+      - name: get min coverage
+        uses: actions/download-artifact@v3
+        with:
+          name: min_coverage
       
-     # - name: set min coverage
-     #   run: |
-     #     echo "OLDCOVER=$(cat OLDCOVER.txt)" >> $GITHUB_ENV
-     #     cat OLDCOVER.txt    
+      - name: set min coverage
+        run: |
+          echo "MINCOVER=$(cat MINCOVER.txt)" >> $GITHUB_ENV
+          cat MINCOVER.txt    
       
       - name: install dependencies
         run: | 
@@ -74,7 +77,7 @@ jobs:
           
           coverage run --source=cvhero -m pytest cv_tests
           coverage lcov -o coverage.lcov
-      
+          
       - name: coveralls parallel
         uses: coverallsapp/github-action@master
         with:
