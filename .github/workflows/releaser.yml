@@ -4,16 +4,16 @@ on:
     branches: [main]
               
 jobs:
-  initialize:
-    runs-on: ubuntu-latest
-    
-    steps:
-      - run: echo "0" > OLDCOVER.txt
-      - uses: actions/upload-artifact@v3
-        with:
-          name: latest_coverage
-          path: OLDCOVER.txt
-      - run: exit 1
+  #initialize:
+  #  runs-on: ubuntu-latest
+  #  
+  #  steps:
+  #    - run: echo "0" > OLDCOVER.txt
+  #    - uses: actions/upload-artifact@v3
+  #      with:
+  #        name: latest_coverage
+  #        path: OLDCOVER.txt
+  #    - run: exit 1
     
   run_tests:
     uses: ./.github/workflows/test_runner.yml
