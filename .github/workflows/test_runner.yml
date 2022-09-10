@@ -19,7 +19,8 @@ jobs:
       - name: set min coverage env
         run: | 
           echo "OLDCOVER=$(cat OLDCOVER.txt)" >> $GITHUB_ENV
-        
+          cat OLDCOVER.txt
+          
       - if: ${{ env.OLDCOVER >= '99' }}
         run: echo "OLDCOVER=99" >> $GITHUB_ENV
     
