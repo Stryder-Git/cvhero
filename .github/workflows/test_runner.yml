@@ -91,9 +91,14 @@ jobs:
       - name: report coverage
         uses: coroo/pytest-coverage-commentator@v1.0.2
             
-      - name: failed coverage
+      - name: coverage ${{ env.COV }} is < ${{ steps.min_coverage.outputs.data }}
         if: ${{ env.COV < steps.min_coverage.outputs.data }}
         run: echo below last released coverage && exit 1
+      
+      - name: coverage ${{ env.COV }} is > ${{ steps.min_coverage.outputs.data }}
+        if: ${{ env.COV > steps.min_coverage.outputs.data }}
+        run: echo above last released coverage && exit 0
+      
           
       
       
