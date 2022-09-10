@@ -76,6 +76,8 @@ jobs:
           file: .github/config_new_release.yml         
           key-path: '["_MIN_COVERAGE"]'
       
+      - run: echo ${{ steps.min_coverage.outputs.data }}
+      
       - name: get this coverage
         uses: actions/download-artifact@v3
         with:
