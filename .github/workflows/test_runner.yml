@@ -2,42 +2,16 @@ name: test_runner
 on: 
   pull_request: 
     branches: [main, dev]
+  workflow_call:
   workflow_dispatch:
+  
 
 env:
   MINCOVER: '0'
 
     
 jobs:
-  get_latest_coverage:
-    runs-on: ubuntu-latest
-    steps:
-      # gets the coverage of the latest release, as it was saved by releaser.yml
-      - name: get latest coverage 
-        uses: dawidd6/action-download-artifact@v2
-        with:
-          name: latest_coverage
-          workflow: releaser.yml
-      
-      - name: set min coverage env
-        run: | 
-          echo "MINCOVER=$(cat OLDCOVER.txt)" >> $GITHUB_ENV
-          cat MINCOVER.txt
-          
-      - if: ${{ env.MINCOVER >= '99' }}
-        run: echo 99 > MINCOVER.txt
-        
-      - if: ${{ env.MINCOVER < '99' }}
-        run: echo $MINCOVER > MINCOVER.txt
-      
-      - uses: actions/upload-artifact@v3
-        with:
-          name: min_coverage
-          path: MINCOVER.txt
-    
-
   run_tests:
-    needs: get_latest_coverage
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -93,18 +67,21 @@ jobs:
     
     env:
       COV: '0'
+      OLDCOVER: '0'
     
     steps:  
-      - name: get min coverage
-        uses: actions/download-artifact@v3
+      # gets the coverage of the latest release, as it was saved by releaser.yml
+      - name: get latest coverage 
+        uses: dawidd6/action-download-artifact@v2
         with:
-          name: min_coverage
+          name: latest_coverage
+          workflow: releaser.yml
       
-      - name: set min coverage
-        run: |
-          echo "MINCOVER=$(cat MINCOVER.txt)" >> $GITHUB_ENV
-          cat MINCOVER.txt    
-    
+      - name: set min coverage env
+        run: | 
+          echo "OLDCOVER=$(cat OLDCOVER.txt)" >> $GITHUB_ENV
+          cat OLDCOVER.txt
+          
       - name: extract coverage
         run: |
           coverage report -m > pytest-coverage.txt
@@ -115,7 +92,7 @@ jobs:
         uses: coroo/pytest-coverage-commentator@v1.0.2
       
       - name: failed coverage
-        if: ${{ env.COV < env.MINCOV }}
+        if: ${{ env.COV < env.OLDCOV }}
         run: echo below last released coverage && exit 1
           
       
