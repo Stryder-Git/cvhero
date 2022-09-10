@@ -66,11 +66,6 @@ jobs:
         with:
           name: latest_coverage
           path: OLDCOVER.txt
-      
-      - name: Coverage  
-        uses: coroo/pytest-coverage-commentator@v1.0.2
-        with:
-          pytest-coverage: coverage.txt
           
   make_release:
     needs: run_tests
