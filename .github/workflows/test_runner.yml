@@ -12,10 +12,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: get latest coverage
-        uses: actions/download-artifact@v3
+        uses: actions/action-download-artifact@v3
         with:
           name: latest_coverage
-      
+          workflow: releaser.yml
+          
       - name: set min coverage env
         run: | 
           echo "OLDCOVER=$(cat OLDCOVER.txt)" >> $GITHUB_ENV
@@ -23,7 +24,6 @@ jobs:
       - if: ${{ env.OLDCOVER >= '99' }}
         run: echo "OLDCOVER=99" >> $GITHUB_ENV
     
-
   run_tests:
     needs: get_latest_coverage
     runs-on: ubuntu-latest
