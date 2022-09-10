@@ -61,6 +61,7 @@ jobs:
       COV: '0'
     
     steps:  
+      - uses: actions/checkout@v3
       - name: get latest coverage 
         id: min_coverage
         uses: KJ002/read-yaml@1.6      
