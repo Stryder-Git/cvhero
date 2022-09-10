@@ -60,16 +60,12 @@ jobs:
       - name: install dependencies
         run: | 
           python -m pip install --upgrade pip
-          pip install pytest pytest-cov
+          pip install pytest coveralls
           pip install -r requirements.txt
           
       - name: run tests
         run: |
           echo testing with min coverage: $OLDCOVER
-          pytest --cov=cvhero --cov-fail-under=$OLDCOVER cv_tests > coverage.txt
-          
-        
-      - name: Coverage
-        uses: coroo/pytest-coverage-commentator@v1.0.2
-        with:
-          pytest-coverage: coverage.txt
+          # pytest --cov=cvhero --cov-fail-under=$OLDCOVER cv_tests > coverage.txt
+          coverage run --source=cvhero -m pytest cv_tests
+          coveralls          
