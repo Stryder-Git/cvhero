@@ -12,11 +12,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: get latest coverage
-        uses: dawidd6/action-download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: latest_coverage
-          workflow: releaser.yml
-          
+      
       - name: set min coverage env
         run: | 
           echo "OLDCOVER=$(cat OLDCOVER.txt)" >> $GITHUB_ENV
@@ -24,6 +23,7 @@ jobs:
       - if: ${{ env.OLDCOVER >= '99' }}
         run: echo "OLDCOVER=99" >> $GITHUB_ENV
     
+
   run_tests:
     needs: get_latest_coverage
     runs-on: ubuntu-latest
@@ -43,7 +43,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install pytest pytest-cov
           pip install -r requirements.txt
-          pytest --cov --cov-fail-under=$OLDCOVER cv_tests > coverage.txt
+          pytest --cov=cvhero --cov-fail-under=$OLDCOVER cv_tests > coverage.txt
         
       - name: Coverage
         uses: coroo/pytest-coverage-commentator@v1.0.2
