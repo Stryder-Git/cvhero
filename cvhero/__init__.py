@@ -20,6 +20,10 @@ def func():
     print("dssss")
     print("dssss")
     print("dssss")
+    print("dssss")
+    print("dssss")
+    print("dssss")
+
 
 
 from .pandas_printer import format_pandas
