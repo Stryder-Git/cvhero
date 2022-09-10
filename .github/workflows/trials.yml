@@ -12,7 +12,7 @@ jobs:
 
       - name: read yaml
         id: yaml-data
-        uses: KJ002/read-yaml@v1.6      
+        uses: KJ002/read-yaml@1.6      
         with:
           file: .github/config_new_release.yml         
           # key-path: '["runs", "using"]' # Access the runs key then the using key and retuns the value.
