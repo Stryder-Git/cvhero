@@ -6,7 +6,4 @@ on:
   
 jobs:
   trial:
-    runs-on: ubuntu-latest
-    
-    steps:
-      - uses: ./other.yml
+    uses: ./.github/workflows/other.yml
