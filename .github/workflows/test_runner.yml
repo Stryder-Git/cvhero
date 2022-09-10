@@ -59,20 +59,14 @@ jobs:
     
     env:
       COV: '0'
-      OLDCOVER: '0'
     
     steps:  
-      # gets the coverage of the latest release, as it was saved by releaser.yml
       - name: get latest coverage 
-        uses: dawidd6/action-download-artifact@v2
+        id: min_coverage
+        uses: KJ002/read-yaml@1.6      
         with:
-          name: latest_coverage
-          workflow: releaser.yml
-      
-      - name: set min coverage
-        run: | 
-          echo "OLDCOVER=$(cat OLDCOVER.txt)" >> $GITHUB_ENV
-          cat OLDCOVER.txt
+          file: .github/config_new_release.yml         
+          key-path: '["_MIN_COVERAGE"]'
           
       - name: extract coverage
         run: |
@@ -84,7 +78,7 @@ jobs:
         uses: coroo/pytest-coverage-commentator@v1.0.2
       
       - name: failed coverage
-        if: ${{ env.COV < env.OLDCOV }}
+        if: ${{ env.COV < steps.min_coverage.outputs.data }}
         run: echo below last released coverage && exit 1
           
       
