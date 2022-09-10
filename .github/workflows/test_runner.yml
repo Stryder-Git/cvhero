@@ -10,7 +10,6 @@ env:
     
 jobs:
   get_latest_coverage:
-    if: ${{ 0 == 1 }}
     runs-on: ubuntu-latest
     steps:
       # gets the coverage of the latest release, as it was saved by releaser.yml
