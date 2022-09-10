@@ -12,6 +12,7 @@ def func():
     print("dssss")
     print("dssss")
     print("dssss")
+    print()
 
 from .pandas_printer import format_pandas
 from pyperclip import copy
