@@ -73,7 +73,7 @@ jobs:
           coverage run --source=cvhero -m pytest cv_tests
       
       - name: coveralls parallel
-        uses: coverallsapp/github-actions@master
+        uses: coverallsapp/github-action@master
         with:
           github-token: ${{ secrets.github_token }}
           flag-name: test_${{matrix.os}}_${{matrix.python-version}}
