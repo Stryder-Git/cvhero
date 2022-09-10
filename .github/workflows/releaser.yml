@@ -9,116 +9,15 @@ env:
   OLDCOVER: '0'
         
 jobs:
-  get_latest_coverage:
+  trial:
     runs-on: ubuntu-latest
+    
     steps:
-      - name: get latest coverage
-        uses: actions/download-artifact@v3
+      - run: echo "0" > OLDCOVER.txt
+      - uses: actions/upload-artifact@v3
         with:
           name: latest_coverage
-      
-      - name: set min coverage env
-        run: | 
-          echo "OLDCOVER=$(cat OLDCOVER.txt)" >> $GITHUB_ENV
-        
-      - if: ${{ env.OLDCOVER >= '99' }}
-        run: echo "OLDCOVER=99" >> $GITHUB_ENV
-    
+          path: OLDCOVER.txt     
 
-  run_tests:
-    needs: get_latest_coverage
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-        python-version: ['3.8', '3.9', '3.10']
 
-    steps:       
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
-        with:
-          python-version: ${{ matrix.python-version }}
-
-      - name: run tests
-        run: | 
-          python -m pip install --upgrade pip
-          pip install pytest pytest-cov
-          pip install -r requirements.txt
-          pytest --cov --cov-fail-under=$OLDCOVER cv_tests > coverage.txt
-      
-      - name: extract total coverage
-        run: |
-          grep "TOTAL" coverage.txt | tr -s " " | cut -d" " -f4 | sed 's/%//') > OLDCOVER.txt
-          
-      - name: save new total coverage
-        uses: actions/upload-artifact@v3
-        with:
-          name: latest_coverage
-          path: OLDCOVER.txt
-      
-      - name: Coverage  
-        uses: coroo/pytest-coverage-commentator@v1.0.2
-        with:
-          pytest-coverage: coverage.txt
-          
-  make_release:
-    needs: run_tests
-    runs-on: ubuntu-latest   
-    steps:
-      - uses: actions/checkout@v3
-      - name: get_new_version
-        run: | 
-          echo "NEWV=$(grep "~" docs/change_log.rst -m1 -a1 | sed 1q | cut -d" " -f1)" >> $GITHUB_ENV
-          
-      - name: get_current_version
-        run: | 
-          echo "OLDV=$(grep "VERSION" -m1 setup.py | cut -d"=" -f2 | sed "s/['\" ]//g")" >> $GITHUB_ENV
-          
-      - name: verify
-        if: ${{ env.NEWV == env.OLDV }}
-        run: echo you did not update the change_log && exit 1
-      
-      - name: set version
-        run: |  
-            sed -i "s/$OLDV/$NEWV/" setup.py
-            sed -i "s/$OLDV/$NEWV/" pyproject.toml
-            
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.10"
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install build twine
-          
-      - name: Build Package
-        run: python -m build
-          
-      - uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          user: __token__
-          password: ${{ secrets.PYPI_TOKEN  }}
-        
-      - name: Install and run tests
-        run: |
-          echo "Will wait 30s" && sleep 30s
-          pip install cvhero
-          pip show cvhero
-          pip install -r requirements.txt
-          pytest cv_tests
-          pip uninstall -y cvhero
-          
-      - uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          file_pattern: setup.py pyproject.toml
-          commit_message: '[GH-Actions] updated verrsion numbers in setup.py and pyproject.toml'
-          
-      - name: Create Release  
-        uses: softprops/action-gh-release@v1
-        with:
-          name: v${{ env.NEWV }}
-          tag_name: v${{ env.NEWV }}
-    
-    
+  
