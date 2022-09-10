@@ -15,7 +15,7 @@ jobs:
         uses: KJ002/read-yaml@1.6      
         with:
           file: .github/config_new_release.yml         
-          key-path: '["new_release", "new_version"]' # Access the runs key then the using key and retuns the value.
+          key-path: '["new_version"]' # Access the runs key then the using key and retuns the value.
 
       - name: Display new_version
         run: echo "${{ steps.new_version.outputs.data }}"
@@ -26,7 +26,7 @@ jobs:
         uses: KJ002/read-yaml@1.6      
         with:
           file: .github/config_new_release.yml         
-          key-path: '["new_release", "change_log"]' # Access the runs key then the using key and retuns the value.
+          key-path: '["change_log"]' # Access the runs key then the using key and retuns the value.
 
       - name: Display new_version
         run: echo "${{ steps.change_log.outputs.data }}"
