@@ -13,6 +13,7 @@ jobs:
       - uses: actions/checkout@v1
 
       - name: get new_version
+        uses: KJ002/read-yaml@1.6
         id: min_coverage
         with:
           file: .github/config_new_release.yml
