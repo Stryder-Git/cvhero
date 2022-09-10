@@ -12,9 +12,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: get latest coverage
-        uses: actions/download-artifact@v3
+        uses: dawidd6/action-download-artifact@v2
         with:
           name: latest_coverage
+          workflow: releaser.yml
       
       - name: set min coverage env
         run: | 
