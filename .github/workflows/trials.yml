@@ -47,7 +47,7 @@ jobs:
           key-path: '["change_log"]'        
       
       - name: show changes
-        run: echo ${{ steps.changes.outputs.data }}
+        run: echo '${{ steps.changes.outputs.data }}'
             
       - name: create change log
         run: | 
