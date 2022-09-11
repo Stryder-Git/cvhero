@@ -22,21 +22,60 @@ jobs:
   make_release:
     needs: run_tests
     runs-on: ubuntu-latest   
+    
+    env:
+      NEWV: ''
+      OLDV: ''
+      HEADER: | 
+        Change Log
+        ==========
+
+        Updates
+        -------
+    
     steps:
       - uses: actions/checkout@v3
+      - name: get new_version 
+        id: new_version
+        uses: KJ002/read-yaml@1.6      
+        with:
+          file: .github/config_new_release.yml         
+          key-path: '["new_version"]'
+      
       - name: get_new_current_version
         run: | 
-          echo "NEWV=$(grep "~" docs/change_log.rst -m1 -a1 | sed 1q | cut -d" " -f1)" >> $GITHUB_ENV
+          echo "NEWV=${{ steps.new_version.outputs.data }}" >> $GITHUB_ENV
           echo "OLDV=$(grep "VERSION" -m1 setup.py | cut -d"=" -f2 | sed "s/['\" ]//g")" >> $GITHUB_ENV
           
       - name: verify
-        if: ${{ env.NEWV == env.OLDV }}
-        run: echo you did not update the change_log && exit 1
+        if: ${{ env.NEWV <= env.OLDV }}
+        run: echo you did not increment the version number && exit 1
       
-      - name: set version
+      - name: set up new version
         run: |  
             sed -i "s/$OLDV/$NEWV/" setup.py
             sed -i "s/$OLDV/$NEWV/" pyproject.toml
+            sed -i "s/$HEADER//" docs/change_log.rst
+                        
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%m-%d-%Y')"
+      
+      - name: Get changes
+        id: changes
+        uses: KJ002/read-yaml@1.6      
+        with:
+          file: .github/config_new_release.yml         
+          key-path: '["change_log"]'
+        
+        
+        
+      - name: create change log
+        run: | 
+          echo $NEWV (${{ steps.date.outputs.date }})\n~~~~~~~~~~~~~~\n
+          
+          
+        
             
       - name: Set up Python
         uses: actions/setup-python@v4
