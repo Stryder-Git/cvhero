@@ -10,9 +10,7 @@ jobs:
     env:
       NEWV: ''
       OLDV: ''
-      SEP: '-------' # used to adjust the change_log
-      NEW: ''
-    
+
     steps:
       - uses: actions/checkout@v3
       - name: get new_version 
