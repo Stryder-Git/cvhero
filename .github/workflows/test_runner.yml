@@ -59,7 +59,8 @@ jobs:
     steps:  
       - uses: actions/checkout@v3
       
-      - name: coveralls_finalize
+      - name: coveralls finalize
+        id: coveralls_finalize
         uses: coverallsapp/github-action@master
         with:
           github-token: ${{secrets.github_token}}
