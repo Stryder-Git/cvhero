@@ -57,10 +57,6 @@ jobs:
           NEW: ${{ format('{0}\n{1} ({2})\n~~~~~~~~~~~~~~\n{3}\n\n', env.NEW, env.NEWV, steps.date.outputs.date, steps.changes.outputs.data) }}
         run: echo $NEW
         
-      - env:
-          NEW: ${{ ${NEW//-/\\-} }}
-        run: echo $NEW
-          
       - name: update change log
         run: | 
           echo "s#$SEP#$SEP\n${NEW//\\/\\/}#"
