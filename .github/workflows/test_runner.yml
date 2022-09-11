@@ -84,7 +84,7 @@ jobs:
       - name: extract coverage
         run: echo "COV=$(grep "TOTAL" pytest-coverage.txt | tr -s " " | cut -d" " -f4 | sed 's/%//')" >> $GITHUB_ENV
       
-      - run: echo ${{ steps.coveralls_finalize.outputs }}
+      - run: echo steps.coveralls_finalize.outputs
       
       - run: | 
           echo ${{ job.coveralls_finalize.outputs.coveralls-api-result }} > tempcov.txt
