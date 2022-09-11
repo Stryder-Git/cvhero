@@ -40,7 +40,7 @@ jobs:
         id: date
         run: echo "::set-output name=date::$(date +'%m/%d/%Y')"
       
-      - run: echo ${{steps.date.outputs.date}}
+      - run: echo '${{steps.date.outputs.date}}'
       
       - name: Get changes
         id: changes
