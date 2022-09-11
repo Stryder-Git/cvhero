@@ -44,7 +44,7 @@ jobs:
           echo "${{ steps.changes.outputs.data }}" >> docs/new_log.rst
           
           sed -n 6,$(wc -l docs/change_log.rst | cut -d' ' -f1)p docs/change_log.rst >> docs/new_log.rst
-          mv docs/new_log.rst docs/change_log.rst && rm docs/new_log.rst
+          mv docs/new_log.rst docs/change_log.rst
           
       - name: set up new version
         run: |  
