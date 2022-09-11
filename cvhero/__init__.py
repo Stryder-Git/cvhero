@@ -4,6 +4,8 @@ from pyperclip import copy
 def func():
     print()
     print()
+    print()
+    sdfsd
 
 def format(obj):
     return format_pandas(obj)
