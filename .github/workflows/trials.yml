@@ -53,6 +53,7 @@ jobs:
         run: echo '${{steps.changes.outputs.data}}'
          
       - name: create change log
+        shell: bash
         env:
           NEW: ${{ format('{0} ({1})\n~~~~~~~~~~~~~~\n{2}\n\n', env.NEWV, steps.date.outputs.date, steps.changes.outputs.data) }}
       
