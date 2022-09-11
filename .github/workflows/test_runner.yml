@@ -89,10 +89,10 @@ jobs:
         
         
       - if: ${{ env.COV > steps.min_coverage.outputs.data }}
-        run: echo "PASSED=PASSED" >> $GTHUB_ENV
+        run: echo "PASSED=PASSED" >> $GITHUB_ENV
           
       - if: ${{ env.COV <= steps.min_coverage.outputs.data }}
-        run: echo "PASSED=FAILED" >> $GTHUB_ENV 
+        run: echo "PASSED=FAILED" >> $GITHUB_ENV 
       
       - name: comment coverage
         if: github.event_name == 'pull_request'
