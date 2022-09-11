@@ -51,12 +51,10 @@ jobs:
       
       - name: show changes
         run: echo ${{steps.changes.outputs.data}}
-        env:
-          NEW: ${{ join(steps.changes.outputs.data, '\n') }}
-          
+         
       - name: create change log
         env:
-          NEW: ${{ format('{0} ({1})\n~~~~~~~~~~~~~~\n{2}\n\n', env.NEWV, steps.date.outputs.date, env.NEW) }}
+          NEW: ${{ format('{0} ({1})\n~~~~~~~~~~~~~~\n{2}\n\n', env.NEWV, steps.date.outputs.date, steps.changes.outputs.data) }}
       
         run: | 
           echo ${NEW//-/\\-}
