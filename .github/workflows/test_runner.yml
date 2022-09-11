@@ -90,9 +90,10 @@ jobs:
       - run: | 
           echo "Full Coverage: $URL\n" > coverage.txt 
           cat pytest-coverage.txt >> coverage.txt
-          echo "MSG=$(cat coverage.txt)" >> $GITHUB_ENV
+          echo "MSG="$(cat coverage.txt)"" >> $GITHUB_ENV
       
       - name: comment coverage
+        if: github.event_name == 'pull_request'
         uses: thollander/actions-comment-pull-request@v1
         with:
           message: env.MSG
