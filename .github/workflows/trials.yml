@@ -56,7 +56,7 @@ jobs:
         env:
           NEW: ${{ format('{0} ({1})\n~~~~~~~~~~~~~~\n{2}\n\n', env.NEWV, steps.date.outputs.date, steps.changes.outputs.data) }}
       
-        run: echo "NEW=${NEW//-/\\-}" >> $GITHUB_ENV
+      - run: echo "NEW=${NEW//-/\\-}" >> $GITHUB_ENV
           
       - name: update change log
         run: | 
