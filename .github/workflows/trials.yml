@@ -54,8 +54,8 @@ jobs:
       
       - name: clean change log
         run: |
-          sed -i "s/$NEW//" docs/change_log.txt
-          cat docs/change_log.txt
+          sed -i "s/$NEW//" docs/change_log.rst
+          cat docs/change_log.rst
      
       - name: prepare new
         env:
