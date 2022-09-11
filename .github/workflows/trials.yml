@@ -55,8 +55,12 @@ jobs:
       - name: update change log
         env:
           NEW: ${{ format('{0} ({1})\n~~~~~~~~~~~~~~\n{2}\n\n', env.NEWV, steps.date.outputs.date, steps.changes.outputs.data) }}
+          
         run: |
-          sed -e '5a\' -e "$NEW" docs/change_log.rst
+          sed 5q docs/change_log.rst > docs/new_log.rst
+          echo "$NEW" >> docs/new_log.rst
+          sed -n 6,$(wc -l docs/change_log.rst | cut -d' ' -f1)p docs/change_log.rst >> docs/new_log.rst
+          cat docs/new_log.rst         
           
 
       - run: cat docs/change_log.rst
