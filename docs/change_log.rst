@@ -1,6 +1,5 @@
-Some stuff
-
-	other stuff
+ Change Log
+==========
 
 Updates
 -------
