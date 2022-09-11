@@ -56,7 +56,7 @@ jobs:
     env:
       COV: '0'
       URL: ''
-      MSG: ''
+      PASSED: ''
     
     steps:  
       - uses: actions/checkout@v3
@@ -86,26 +86,34 @@ jobs:
           
       - name: extract this coverage
         run: echo "COV=$(grep "TOTAL" pytest-coverage.txt | tr -s " " | cut -d" " -f4 | sed 's/%//')" >> $GITHUB_ENV
-      
-      - run: | 
-          echo "Full Coverage: $URL\n" > coverage.txt 
-          cat pytest-coverage.txt >> coverage.txt
-          echo "MSG="$(cat coverage.txt -v)"" >> $GITHUB_ENV
+        
+        
+      - if: ${{ env.COV > steps.min_coverage.outputs.data }}
+        run: echo "PASSED=PASSED" >> $GTHUB_ENV
+          
+      - if: ${{ env.COV <= steps.min_coverage.outputs.data }}
+        run: echo "PASSED=FAILED" >> $GTHUB_ENV 
       
       - name: comment coverage
         if: github.event_name == 'pull_request'
         uses: thollander/actions-comment-pull-request@v1
         with:
-          message: ${{ env.MSG }}
+          message: | 
+            $PASSED Coverage: 
+              $COV (last release: ${{steps.min_coverage.outputs.data}})
+            
+            View Full Coverage: 
+              $URL          
+            
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             
-      - name: coverage ${{ env.COV }} < ${{ steps.min_coverage.outputs.data }}
-        if: ${{ env.COV < steps.min_coverage.outputs.data }}
+      - name: failed coverage
+        if: env.PASSED == 'FAILED'
         run: echo below last released coverage && exit 1
       
-      - name: coverage ${{ env.COV }} > ${{ steps.min_coverage.outputs.data }}
-        if: ${{ env.COV > steps.min_coverage.outputs.data }}
-        run: echo above last released coverage && exit 0
+      - name: passed coverage
+        if: env.PASSED == 'PASSED'
+        run: echo above last released coverage && exit 1
       
           
       
