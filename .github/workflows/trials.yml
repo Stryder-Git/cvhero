@@ -51,16 +51,22 @@ jobs:
       
       - name: show changes
         run: echo '${{steps.changes.outputs.data}}'
-         
-      - name: prepare change log
+      
+      - name: clean change log
+        run: |
+          sed -i "s/$NEW//" docs/change_log.txt
+          cat docs/change_log.txt
+     
+      - name: prepare new
         env:
           NEW: ${{ format('{0}\n{1} ({2})\n~~~~~~~~~~~~~~\n{3}\n\n', env.NEW, env.NEWV, steps.date.outputs.date, steps.changes.outputs.data) }}
         run: echo $NEW
         
       - name: update change log
         run: | 
-          echo "s#$SEP#$SEP\n${NEW//\\/\\/}#"
-          sed -i "s#$SEP#$SEP\n${NEW//\\/\\/}#" docs/change_log.rst         
+          echo hi
+          #echo "s#$SEP#$SEP\n${NEW//\\/\\/}#"
+          #sed -i "s#$SEP#$SEP\n${NEW//\\/\\/}#" docs/change_log.rst         
               
       
       - run: cat docs/change_log.rst
