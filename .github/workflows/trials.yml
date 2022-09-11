@@ -11,7 +11,7 @@ jobs:
       NEWV: ''
       OLDV: ''
       SEP: '-------' # used to adjust the change_log
-      NEW: ' Change Log\n==========\n\nUpdates\n-------'
+      NEW: ''
     
     steps:
       - uses: actions/checkout@v3
@@ -51,11 +51,6 @@ jobs:
       
       - name: show changes
         run: echo '${{steps.changes.outputs.data}}'
-      
-      - name: clean change log
-        run: |
-          sed -i "s/$NEW//" docs/change_log.rst
-          cat docs/change_log.rst
      
       - name: prepare new
         env:
@@ -64,9 +59,7 @@ jobs:
         
       - name: update change log
         run: | 
-          echo hi
-          #echo "s#$SEP#$SEP\n${NEW//\\/\\/}#"
-          #sed -i "s#$SEP#$SEP\n${NEW//\\/\\/}#" docs/change_log.rst         
+          sed "5a $NEW" docs/change_log.rst  
               
       
       - run: cat docs/change_log.rst
