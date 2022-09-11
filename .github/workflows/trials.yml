@@ -57,7 +57,7 @@ jobs:
           NEW: ${{ format('{0} ({1})\n~~~~~~~~~~~~~~\n{2}\n\n', env.NEWV, steps.date.outputs.date, steps.changes.outputs.data) }}
         run: |
           echo $NEW
-          sed "5a\ ${NEW//-/\-}" docs/change_log.rst  
+          sed "5a\ ${NEW//-/\\-}" docs/change_log.rst  
 
       - run: cat docs/change_log.rst
           
