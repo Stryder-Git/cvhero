@@ -48,17 +48,11 @@ jobs:
         with:
           file: .github/config_new_release.yml         
           key-path: '["change_log"]'        
-      
-      - name: show changes
-        run: echo '${{steps.changes.outputs.data}}'
-     
+           
       - name: update change log
-        env:
-          NEW: ${{ format('{0} ({1})\r\n~~~~~~~~~~~~~~\r\n{2}\r\n\r\n', env.NEWV, steps.date.outputs.date, steps.changes.outputs.data) }}
-          
         run: |
           sed 5q docs/change_log.rst > docs/new_log.rst
-          echo "${{ format('{0} ({1})', env.NEWV, steps.date.outputs.date) }}" >> docs/new_log.rst
+          echo "$NEWV ($(date +%m/%d/%Y))" >> docs/new_log.rst
           echo '~~~~~~~~~~~~~~' >> docs/new_log.rst
           echo "${{ steps.changes.outputs.data }}" >> docs/new_log.rst
           
