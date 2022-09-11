@@ -52,16 +52,13 @@ jobs:
       - name: show changes
         run: echo '${{steps.changes.outputs.data}}'
      
-      - name: prepare new
+      - name: update change log
         env:
           NEW: ${{ format('{0} ({1})\n~~~~~~~~~~~~~~\n{2}\n\n', env.NEWV, steps.date.outputs.date, steps.changes.outputs.data) }}
-        run: echo $NEW
-        
-      - name: update change log
-        run: | 
+        run: |
+          echo $NEW
           sed "5a\ $NEW" docs/change_log.rst  
-              
-      
+
       - run: cat docs/change_log.rst
           
         
