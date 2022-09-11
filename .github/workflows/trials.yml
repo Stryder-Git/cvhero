@@ -11,7 +11,7 @@ jobs:
       NEWV: ''
       OLDV: ''
       SEP: '-------' # used to adjust the change_log
-      NEW: ''
+      NEW: ' Change Log\n==========\n\nUpdates\n-------'
     
     steps:
       - uses: actions/checkout@v3
@@ -54,7 +54,7 @@ jobs:
          
       - name: prepare change log
         env:
-          NEW: ${{ format('{0} ({1})\n~~~~~~~~~~~~~~\n{2}\n\n', env.NEWV, steps.date.outputs.date, steps.changes.outputs.data) }}
+          NEW: ${{ format('{0}\n{1} ({2})\n~~~~~~~~~~~~~~\n{3}\n\n', env.NEW, env.NEWV, steps.date.outputs.date, steps.changes.outputs.data) }}
         run: echo $NEW
         
       - env:
