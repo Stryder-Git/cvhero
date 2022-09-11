@@ -11,15 +11,9 @@ jobs:
   other_job:
     runs-on: ubuntu-latest
     steps:
-      - id: 'id1'
-        run: echo "other job 1"
+      - if: ${{ '' < '0.0.1' }}
+        run: echo lower
       
-      - run: echo ${{ steps.id1.outputs.data }}
-      
-  other_job2:
-    
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo "other job 2"
-        
+      - if: ${{ '' > '0.0.1' }}
+        run: echo greater
   
