@@ -57,6 +57,8 @@ jobs:
           NEW: ${{ format('{0} ({1})\n~~~~~~~~~~~~~~\n{2}\n\n', env.NEWV, steps.date.outputs.date, steps.changes.outputs.data) }}
       
         run: | 
+          grep $SEP docs/change_log.rst -a1
+          echo $SEP\n$NEW
           sed 's/$SEP/$SEP\n$NEW/' docs/change_log.rst
           
           
