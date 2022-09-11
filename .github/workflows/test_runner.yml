@@ -55,6 +55,7 @@ jobs:
     
     env:
       COV: '0'
+      URL: ''
     
     steps:  
       - uses: actions/checkout@v3
@@ -67,28 +68,26 @@ jobs:
           parallel-finished: true
           path-to-lcov: coverage.lcov
       
+      - name: get coveralls url
+        run: echo "URL=${{ fromJSON(steps.coveralls_finalize.outputs.coveralls-api-result)['url'] }}" >> $GITHUB_ENV
+                
       - name: get latest coverage 
         id: min_coverage
         uses: KJ002/read-yaml@1.6      
         with:
           file: .github/config_new_release.yml         
           key-path: '["_MIN_COVERAGE"]'
-      
-      - run: echo ${{ steps.min_coverage.outputs.data }}
-      
+            
       - name: get this coverage
         uses: actions/download-artifact@v3
         with:
           name: coverage
           
-      - name: extract coverage
+      - name: extract this coverage
         run: echo "COV=$(grep "TOTAL" pytest-coverage.txt | tr -s " " | cut -d" " -f4 | sed 's/%//')" >> $GITHUB_ENV
       
-      - run: echo ${{ steps.coveralls_finalize.outputs.coveralls-api-result }}
-      
       - run: | 
-          echo ${{ job.coveralls_finalize.outputs.coveralls-api-result }} > tempcov.txt
-          echo pytest-coverage.txt >> tempcov.txt && mv tempcov.txt pytest-coverage.txt
+          echo "\n\nFull Coverage: $URL\n" >> pytest-coverage.txt
           cat pytest-coverage.txt
       
       - name: report coverage
