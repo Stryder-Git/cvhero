@@ -96,7 +96,7 @@ jobs:
         if: github.event_name == 'pull_request'
         uses: thollander/actions-comment-pull-request@v1
         with:
-          message: env.MSG
+          message: ${{ env.MSG }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             
       - name: coverage ${{ env.COV }} < ${{ steps.min_coverage.outputs.data }}
