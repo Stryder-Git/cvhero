@@ -58,7 +58,7 @@ jobs:
           
         run: |
           sed 5q docs/change_log.rst > docs/new_log.rst
-          echo "$NEW" >> docs/new_log.rst
+          echo "${{ format('{0} ({1})', env.NEWV, steps.date.outputs.date) }}" >> docs/new_log.rst
           sed -n 6,$(wc -l docs/change_log.rst | cut -d' ' -f1)p docs/change_log.rst >> docs/new_log.rst
           cat docs/new_log.rst         
           
