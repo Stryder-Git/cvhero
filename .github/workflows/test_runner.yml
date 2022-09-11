@@ -99,11 +99,9 @@ jobs:
         uses: thollander/actions-comment-pull-request@v1
         with:
           message: | 
-            ${{env.PASSED}} Coverage: 
-            \t${{env.COV}}% (last release: ${{steps.min_coverage.outputs.data}}%)
+            ${{env.PASSED}} Coverage: ${{env.COV}}% (last release: ${{steps.min_coverage.outputs.data}}%)
             
-            View Full Coverage: 
-            \t${{env.URL}}
+            View Full Coverage: ${{env.URL}}
             
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             
