@@ -3,14 +3,59 @@ name: trials
 on:
   workflow_dispatch:
   
-  
 jobs:
   trial:
-    runs-on: ubuntu-latest
-    
+    runs-on: ubuntu-latest    
+   
+    env:
+      NEWV: ''
+      OLDV: ''
+
     steps:
-      - run: echo "0" > OLDCOVER.txt
-      - uses: actions/upload-artifact@v3
+      - uses: actions/checkout@v3
+      - name: get new_version 
+        id: new_version
+        uses: KJ002/read-yaml@1.6      
         with:
-          name: latest_coverage
-          path: OLDCOVER.txt      
+          file: .github/config_new_release.yml         
+          key-path: '["new_version"]'
+      
+      - name: get_new_current_version
+        run: | 
+          echo "NEWV=${{ steps.new_version.outputs.data }}" >> $GITHUB_ENV
+          echo "OLDV=$(grep "VERSION" -m1 setup.py | cut -d"=" -f2 | sed "s/['\" ]//g")" >> $GITHUB_ENV
+          
+      - name: verify ${{env.NEWV}} > ${{env.OLDV}}
+        if: ${{ env.NEWV <= env.OLDV }}
+        run: echo you did not increment the version number && exit 1
+            
+      - name: Get changes
+        id: changes
+        uses: KJ002/read-yaml@1.6      
+        with:
+          file: .github/config_new_release.yml         
+          key-path: '["change_log"]'        
+           
+      - name: update change log
+        run: |
+          sed 5q docs/change_log.rst > docs/new_log.rst
+          echo "$NEWV ($(date +%m/%d/%Y))" >> docs/new_log.rst
+          echo '~~~~~~~~~~~~~~' >> docs/new_log.rst
+          echo "${{ steps.changes.outputs.data }}" >> docs/new_log.rst
+          
+          sed -n 6,$(wc -l docs/change_log.rst | cut -d' ' -f1)p docs/change_log.rst >> docs/new_log.rst
+          mv docs/new_log.rst docs/change_log.rst
+          
+      - name: set up new version
+        run: |  
+            sed -i "s/$OLDV/$NEWV/" setup.py
+            sed -i "s/$OLDV/$NEWV/" pyproject.toml
+
+      - run: cat docs/change_log.rst
+          
+        
+          
+        
+          
+          
+
