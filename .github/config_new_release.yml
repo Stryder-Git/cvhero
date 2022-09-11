@@ -1,9 +1,11 @@
 
-new_version: '0.1.20'
+new_version: '0.1.21'
 
 change_log: |
-  - test change
-  - and another change
+  - a change
+  - second
+  - third
+  -fourth
 
 
 release_body: |
