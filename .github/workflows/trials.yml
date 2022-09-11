@@ -52,7 +52,7 @@ jobs:
       - name: show changes
         run: echo ${{steps.changes.outputs.data}}
         env:
-          NEW: ${{ join(steps.changes.outputs.data, '\n') }}'
+          NEW: ${{ join(steps.changes.outputs.data, '\n') }}
           
       - name: create change log
         env:
