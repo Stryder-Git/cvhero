@@ -111,7 +111,7 @@ jobs:
       
       - name: passed coverage
         if: env.PASSED == 'PASSED'
-        run: echo above last released coverage && exit 1
+        run: echo above last released coverage && exit 0
       
           
       
