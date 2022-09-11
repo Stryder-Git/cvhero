@@ -58,6 +58,7 @@ jobs:
       
         run: | 
           echo ${NEW//-/\\-}
+          echo "s#$SEP#$SEP\n${NEW//-/\\-}#"
           sed -i "s#$SEP#$SEP\n${NEW//-/\\-}#" docs/change_log.rst         
           
       
