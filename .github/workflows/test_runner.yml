@@ -89,33 +89,12 @@ jobs:
         
         
       - if: ${{ env.COV > steps.min_coverage.outputs.data }}
-        run: echo "PASSED=PASSED" >> $GITHUB_ENV
+        run: echo "PASSED=PASSED" >> $GITHUB_ENV && echo passed && exit 0
           
       - if: ${{ env.COV <= steps.min_coverage.outputs.data }}
-        run: echo "PASSED=FAILED" >> $GITHUB_ENV 
+        run: echo "PASSED=FAILED" >> $GITHUB_ENV && echo failed && exit 1
       
-      - name: comment coverage
-        if: github.event_name == 'pull_request'
-        uses: thollander/actions-comment-pull-request@v1
-        with:
-          message: | 
-            ${{env.PASSED}} Coverage: ${{env.COV}}% (last release: ${{steps.min_coverage.outputs.data}}%)
-            
-            View Full Coverage: ${{env.URL}}
-            
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            
-      - name: failed coverage
-        if: env.PASSED == 'FAILED'
-        run: echo below last released coverage && exit 1
-      
-      - name: passed coverage
-        if: env.PASSED == 'PASSED'
-        run: echo above last released coverage && exit 0
-      
-          
-      
-      
+    
       
       
     
