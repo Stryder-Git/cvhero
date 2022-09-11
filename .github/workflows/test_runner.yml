@@ -86,6 +86,7 @@ jobs:
       - run: | 
           echo ${{ job.coveralls_finalize.outputs.coveralls-api-result }} > tempcov.txt
           echo pytest-coverage.txt >> tempcov.txt && mv tempcov.txt pytest-coverage.txt
+          cat pytest-coverage.txt
       
       - name: report coverage
         uses: coroo/pytest-coverage-commentator@v1.0.2
