@@ -59,7 +59,7 @@ jobs:
         
       - name: update change log
         run: | 
-          sed "5a $NEW" docs/change_log.rst  
+          sed "5a\ $NEW" docs/change_log.rst  
               
       
       - run: cat docs/change_log.rst
