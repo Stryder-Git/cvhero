@@ -3,6 +3,11 @@
 
 Updates
 -------
+0.1.19 (09/11/2022)
+~~~~~~~~~~~~~~
+- test change
+- and another change
+
 0.1.17 (01/02/22)
 ~~~~~~~~~~~~~~~~
 - another release
