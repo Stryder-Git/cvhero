@@ -5,6 +5,8 @@ def func():
     print()
     print()
     print()
+    print()
+    print()
 
 def format(obj):
     return format_pandas(obj)
