@@ -5,3 +5,5 @@ API
    :toctree: generated
 
    lumache
+
+This is a text
