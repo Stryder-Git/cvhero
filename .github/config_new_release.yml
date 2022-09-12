@@ -1,14 +1,11 @@
 
-new_version: '0.1.24'
+new_version: '0.1.25'
 
 change_log: |
-  - a change
-  - second
-  - third
-  -fourth
+  - added readthedocs
+  
 
 
 release_body: |
-  this is a release body giving the option of 
-  describing the new release in more detail
+  Just figuring out the sphinx/rtd process
 
