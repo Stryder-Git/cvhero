@@ -32,13 +32,7 @@ jobs:
         run: |          
           coverage run --source=cvhero -m pytest cv_tests
           coverage lcov -o coverage.lcov
-          coverage report -m > pytest-coverage.txt   
-          
-      - name: save coverage
-        uses: actions/upload-artifact@v3
-        with:
-          name: coverage
-          path: pytest-coverage.txt
+          # coverage report -m > pytest-coverage.txt   
           
       - name: coveralls parallel
         uses: coverallsapp/github-action@master
@@ -52,12 +46,7 @@ jobs:
     if: ${{ always() }}
     needs: run_tests
     runs-on: ubuntu-latest
-    
-    env:
-      COV: '0'
-      URL: ''
-      PASSED: ''
-    
+
     steps:  
       - uses: actions/checkout@v3
       
@@ -69,30 +58,7 @@ jobs:
           parallel-finished: true
           path-to-lcov: coverage.lcov
       
-      - name: get coveralls url
-        run: echo "URL=${{ fromJSON(steps.coveralls_finalize.outputs.coveralls-api-result)['url'] }}" >> $GITHUB_ENV
-                
-      - name: get min coverage 
-        id: min_coverage
-        uses: KJ002/read-yaml@1.6      
-        with:
-          file: .github/config_new_release.yml         
-          key-path: '["_MIN_COVERAGE"]'
-            
-      - name: get this coverage
-        uses: actions/download-artifact@v3
-        with:
-          name: coverage
-          
-      - name: extract this coverage
-        run: echo "COV=$(grep "TOTAL" pytest-coverage.txt | tr -s " " | cut -d" " -f4 | sed 's/%//')" >> $GITHUB_ENV
-        
-        
-      - if: ${{ env.COV > steps.min_coverage.outputs.data }}
-        run: echo "PASSED=PASSED" >> $GITHUB_ENV && echo passed && exit 0
-          
-      - if: ${{ env.COV <= steps.min_coverage.outputs.data }}
-        run: echo "PASSED=FAILED" >> $GITHUB_ENV && echo failed && exit 1
+
       
     
       
