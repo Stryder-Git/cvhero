@@ -1,0 +1,14 @@
+
+new_version: '0.1.24'
+
+change_log: |
+  - a change
+  - second
+  - third
+  -fourth
+
+
+release_body: |
+  this is a release body giving the option of 
+  describing the new release in more detail
+
