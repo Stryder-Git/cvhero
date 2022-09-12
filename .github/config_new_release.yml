@@ -1,5 +1,5 @@
 
-new_version: '0.1.21'
+new_version: '0.1.22'
 
 change_log: |
   - a change
@@ -11,8 +11,3 @@ change_log: |
 release_body: |
   this is a release body giving the option of 
   describing the new release in more detail
-
-
-## DO NOT CHANGE THIS MANUALLY
-_MIN_COVERAGE: 85
-
