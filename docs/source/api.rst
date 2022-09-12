@@ -4,6 +4,6 @@ API
 .. autosummary::
    :toctree: generated
 
-   lumache
+   cvhero
+   
 
-This is a text
