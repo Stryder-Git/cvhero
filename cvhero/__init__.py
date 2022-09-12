@@ -1,7 +1,9 @@
 from .pandas_printer import format_pandas
 from pyperclip import copy
 
-def func(): return
+def func(): 
+    print()
+    print()
 
 def format(obj):
     return format_pandas(obj)
