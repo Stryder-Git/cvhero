@@ -50,21 +50,12 @@ jobs:
           
           sed -n 6,$(wc -l docs/change_log.rst | cut -d' ' -f1)p docs/change_log.rst >> docs/new_log.rst
           mv docs/new_log.rst docs/change_log.rst
-          
-      - name: get this coverage
-        uses: actions/download-artifact@v3
-        with:
-          name: coverage
-          
-      - name: extract coverage
-        run: echo "COV=$(grep "TOTAL" pytest-coverage.txt | tr -s " " | cut -d" " -f4 | sed 's/%//')" >> $GITHUB_ENV
-      
-          
+
       - name: set up new version
         run: |  
             sed -i "s/$OLDV/$NEWV/" setup.py
             sed -i "s/$OLDV/$NEWV/" pyproject.toml
-            sed -i "s/$(grep "_MIN_COVERAGE" .github/config_new_release.yml)/_MIN_COVERAGE: $COV/" .github/config_new_release.yml
+            # sed -i "s/$(grep "_MIN_COVERAGE" .github/config_new_release.yml)/_MIN_COVERAGE: $COV/" .github/config_new_release.yml
             
 
       - name: Set up Python
@@ -95,7 +86,7 @@ jobs:
           
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          file_pattern: setup.py pyproject.toml docs/change_log.rst .github/config_new_release.yml
+          file_pattern: setup.py pyproject.toml docs/change_log.rst
           commit_message: '[GH-Actions] updated configuration and documentation files for new release.'
           
       - name: Create Release  
