@@ -6,6 +6,8 @@
 Welcome to cvhero's documentation!
 ==================================
 
+Hi there, world!
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
