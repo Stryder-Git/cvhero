@@ -12,8 +12,10 @@
 
   jobs:     
     run_tests:
-      if: ${{ env.VALID }}
-      uses: ./.github/workflows/test_runner.yml
+      runs-on: ubuntu-latest
+      steps:
+        - if: env.VALID
+          uses: ./.github/workflows/test_runner.yml
   
     test_new_release:
       needs: run_tests
