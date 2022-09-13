@@ -12,7 +12,7 @@
   jobs:      
     test_new_release:
       runs-on: ubuntu-latest
-      if: ${{ github.head_ref == 'dev' }}
+      if: ${{ !github.event.pull_request.head.repo.fork && github.head_ref == 'dev' }}
 
       steps:
         - uses: actions/checkout@v3
