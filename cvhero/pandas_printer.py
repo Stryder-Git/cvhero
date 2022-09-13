@@ -124,6 +124,10 @@ def format_pandas(obj):
     else:
         raise ValueError("Only pd.DataFrame, -Series, and -Index are currently supported")
 
+def pandas_to_str(obj):
+    return str(obj)
+        
+        
 #
 # pd.DataFrame({
 # 	'bl': pd.Series([True, False, True]),
