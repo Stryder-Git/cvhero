@@ -15,8 +15,8 @@ jobs:
       - run: |
           pip install pip --upgrade
           pip install jupyter
-          - run: |
-              cd docs
+      - run: |
+          cd docs
           jupyter nbconvert --to rst --output-dir . --output usage.rst ../examples/usage.ipynb
           
       
@@ -31,8 +31,8 @@ jobs:
       - run: |
           pip install pip --upgrade
           pip install jupyter
-          - run: |
-              cd docs
+      - run: |
+          cd docs
           jupyter nbconvert --execute --ExecutePreprocessor.kernel_name='python3' --to rst --output-dir . --output usage.rst ../examples/usage.ipynb
   
   trial3:
