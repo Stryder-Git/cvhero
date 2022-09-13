@@ -11,13 +11,15 @@ Hi there, world!
 Examples:
 .. toctree::
    :maxdepth: 2
-   usage.rst
+   
+   usage
    
 
 Log of Updates:
 .. toctree::
    :maxdepth: 1
-   change_log.rst
+   
+   change_log
  
 
 
