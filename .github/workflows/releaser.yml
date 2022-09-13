@@ -93,7 +93,7 @@ jobs:
         run: |
             pip install jupyter
             cd docs 
-            jupyter nbconvert --to rst --execute --output-dir . --output usage.rst ..\examples\usage.ipynb
+            jupyter nbconvert --to rst --execute --output-dir . --output usage.rst ../examples/usage.ipynb
             cd ..
           
       - uses: stefanzweifel/git-auto-commit-action@v4
