@@ -73,9 +73,9 @@
 
         - name: Install from test and run tests
           run: |
-            echo "Will wait 30s" && sleep 30s
+            echo "Will wait 90s" && sleep 90s
             pip install pip --upgrade
-            pip install --index-url https://test.pypi.org/simple cvhero==${{ github.ref_name }}
+            pip install --index-url https://test.pypi.org/simple cvhero==$NEWV
             pip show cvhero
             pip install -r requirements.txt
             pytest cv_tests
