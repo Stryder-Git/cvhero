@@ -7,6 +7,11 @@
     workflow_dispatch:
 
   jobs:
+    show:
+      runs-on: ubuntu-latest
+      steps:
+        - run: echo ${{ github.repository }} ${{ github.repository_owner }}
+  
     wrong_branch:
       runs-on: ubuntu-latest
       if: ${{ github.head_ref != 'dev' }}
