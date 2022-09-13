@@ -82,7 +82,7 @@ jobs:
         
       - name: Install and run tests
         run: |
-          echo "Will wait 90s" && sleep 90s
+          echo "Will wait 120s" && sleep 120s
           pip install cvhero
           pip install -r requirements.txt
           python -c 'import cvhero;print(cvhero.__version__)'
@@ -93,7 +93,7 @@ jobs:
         run: |
             pip install jupyter
             cd docs 
-            jupyter nbconvert --to rst --execute --output-dir . --output usage.rst ../examples/usage.ipynb
+            jupyter nbconvert --to rst --output-dir . --output usage.rst ../examples/usage.ipynb
             cd ..
           
       - uses: stefanzweifel/git-auto-commit-action@v4
