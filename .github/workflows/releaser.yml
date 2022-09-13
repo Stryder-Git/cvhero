@@ -91,10 +91,11 @@ jobs:
           
       - name: prepare usage.rst
         run: |
-            pip install jupyter
-            cd docs 
-            jupyter nbconvert --to rst --output-dir . --output usage.rst ../examples/usage.ipynb
-            cd ..
+          pip install jupyter
+          sudo apt install pandoc
+          cd docs 
+          jupyter nbconvert --execute --ExecutePreprocessor.kernel_name='python3' --to rst --output-dir . --output usage.rst ../examples/usage.ipynb
+          cd ..
           
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
