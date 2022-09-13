@@ -11,9 +11,11 @@
       runs-on: ubuntu-latest
       steps:
         - run: | 
-            echo sender : ${{ github.event.pull_request_target.sender }}
-            echo repo : ${{ github.event.pull_request_target.repository }}
-            echo organ : ${{ github.event.pull_request_target.organization }}
+            echo fork target : ${{ github.event.pull_request_target.head.repo.fork }}
+            echo name target: ${{ github.event.pull_request_target.head.repo.full_name }}
+            
+            echo fork : ${{ github.event.pull_request.head.repo.fork }}
+            echo name : ${{ github.event.pull_request.head.repo.full_name }}
   
     wrong_branch:
       runs-on: ubuntu-latest
