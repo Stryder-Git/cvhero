@@ -75,8 +75,8 @@
           run: |
             echo "Will wait 90s" && sleep 90s
             pip install pip --upgrade
-            pip install --index-url https://test.pypi.org/simple cvhero==$NEWV
-            pip show cvhero
+            pip install --index-url --no-deps https://test.pypi.org/simple cvhero==$NEWV
             pip install -r requirements.txt
+            python -c 'import cvhero;print(cvhero.__version__)'
             pytest cv_tests
             pip uninstall -y cvhero 
