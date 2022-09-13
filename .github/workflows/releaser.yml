@@ -83,7 +83,7 @@ jobs:
       - name: Install and run tests
         run: |
           echo "Will wait 90s" && sleep 90s
-          pip install cvhero==$NEWV
+          pip install cvhero
           pip install -r requirements.txt
           python -c 'import cvhero;print(cvhero.__version__)'
           pytest cv_tests
