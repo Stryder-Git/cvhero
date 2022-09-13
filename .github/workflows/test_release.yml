@@ -75,7 +75,7 @@
           run: |
             echo "Will wait 30s" && sleep 30s
             pip install pip --upgrade
-            pip install --index-url https://test.pypi.org/simple cvhero
+            pip install --index-url https://test.pypi.org/simple cvhero==${{ github.ref_name }}
             pip show cvhero
             pip install -r requirements.txt
             pytest cv_tests
