@@ -15,7 +15,7 @@ jobs:
       - run: |
           pip install pip --upgrade
           pip install jupyter 
-          pip install --target . pandoc
+          sudo apt install pandoc
           pip install -r requirements.txt
       - run: |
           cd docs
@@ -33,7 +33,7 @@ jobs:
       - run: |
           pip install pip --upgrade
           pip install jupyter 
-          pip install --target . pandoc
+          sudo apt install pandoc
           pip install -r requirements.txt
       - run: |
           cd docs
@@ -50,7 +50,7 @@ jobs:
       - run: |
           pip install pip --upgrade
           pip install jupyter 
-          pip install --target . pandoc
+          sudo apt install pandoc
           pip install -r requirements.txt
       - run: |
           cd docs
