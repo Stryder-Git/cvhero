@@ -3,7 +3,7 @@ from os import path
 from setuptools import setup
 
 # version
-VERSION = '0.1.39'
+VERSION = '0.1.41'
 
 # requirements
 REQUIRED_PYTHON = '>=3.8.0'
