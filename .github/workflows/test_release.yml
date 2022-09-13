@@ -8,16 +8,17 @@
   env:
     NEWV: ""
     OLDV: ""
-    NOTVALID: ${{ github.event.pull_request.head.repo.fork || github.head_ref != 'dev' }}
 
   jobs:     
-    run_tests:
+    check:
       runs-on: ubuntu-latest
       steps:
-        - if: env.NOTVALID
+        - if: ${{ github.event.pull_request.head.repo.fork || github.head_ref != 'dev' }}
           run: echo PR against main that is not based on dev && exit 1
-        - uses: actions.checkout@v3
-        - uses: ./.github/workflows/test_runner.yml
+
+    run_tests:
+      needs: check
+      uses: ./.github/workflows/test_runner.yml
   
     test_new_release:
       needs: run_tests
