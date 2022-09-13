@@ -100,7 +100,7 @@ jobs:
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           file_pattern: setup.py pyproject.toml docs/change_log.rst docs/usage.rst
-          commit_message: '[GH-Actions] updated configuration and documentation files for new release.'
+          commit_message: '[GH-Actions] v${{ env.NEWV }} -- updated configuration and documentation files.'
           
       - name: Create Release  
         uses: softprops/action-gh-release@v1
