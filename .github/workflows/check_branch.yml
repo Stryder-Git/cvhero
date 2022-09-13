@@ -6,17 +6,7 @@
       
     workflow_dispatch:
 
-  jobs:
-    show:
-      runs-on: ubuntu-latest
-      steps:
-        - run: | 
-            echo fork target : ${{ github.event.pull_request_target.head.repo.fork }}
-            echo name target: ${{ github.event.pull_request_target.head.repo.full_name }}
-            
-            echo fork : ${{ github.event.pull_request.head.repo.fork }}
-            echo name : ${{ github.event.pull_request.head.repo.full_name }}
-  
+  jobs:  
     wrong_branch:
       runs-on: ubuntu-latest
       if: ${{ github.event.pull_request.head.repo.fork || github.head_ref != 'dev' }}
