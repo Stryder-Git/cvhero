@@ -14,7 +14,7 @@ jobs:
           
       - run: |
           pip install pip --upgrade
-          pip install jupyter nbconvert nbformat
+          pip install jupyter pandoc
           pip install -r requirements.txt
       - run: |
           cd docs
@@ -31,7 +31,7 @@ jobs:
           
       - run: |
           pip install pip --upgrade
-          pip install jupyter nbconvert nbformat
+          pip install jupyter pandoc
           pip install -r requirements.txt
       - run: |
           cd docs
@@ -47,7 +47,7 @@ jobs:
           
       - run: |
           pip install pip --upgrade
-          pip install jupyter nbconvert nbformat
+          pip install jupyter pandoc
           pip install -r requirements.txt
       - run: |
           cd docs
