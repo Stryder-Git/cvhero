@@ -4,6 +4,12 @@
     sys.path.append("../") 
     import cvhero as cv
 
+
+.. parsed-literal::
+
+    
+
+
 This is a random demonstration
 ------------------------------
 
