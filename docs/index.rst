@@ -9,17 +9,19 @@ Welcome to cvhero's documentation!
 Hi there, world!
 
 Examples:
+=========
 .. toctree::
    :maxdepth: 2
    
-   usage
+   usage.rst
    
 
 Log of Updates:
+===============
 .. toctree::
    :maxdepth: 1
    
-   change_log
+   change_log.rst
  
 
 
