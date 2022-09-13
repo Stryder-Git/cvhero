@@ -10,7 +10,10 @@
     show:
       runs-on: ubuntu-latest
       steps:
-        - run: echo ${{ github.repository }} ${{ github.repository_owner }}
+        - run: | 
+            echo sender : ${{ github.event.pull_request.sender }}
+            echo repo : ${{ github.event.pull_request.repository }}
+            echo organ : ${{ github.event.pull_request.organization }}
   
     wrong_branch:
       runs-on: ubuntu-latest
