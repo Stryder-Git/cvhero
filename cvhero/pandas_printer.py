@@ -112,6 +112,9 @@ def format_dataframe(df, ignore_index= False):
 
 
 def format_pandas(obj):
+    """
+    Used to format a pandas object. This must be a DataFrame, Series, or Index.
+    """
     if isinstance(obj, pd.DataFrame):
         return format_dataframe(obj)
 
@@ -123,7 +126,8 @@ def format_pandas(obj):
 
     else:
         raise ValueError("Only pd.DataFrame, -Series, and -Index are currently supported")
-
+        
+        
 #
 # pd.DataFrame({
 # 	'bl': pd.Series([True, False, True]),
