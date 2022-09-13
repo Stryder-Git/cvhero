@@ -8,11 +8,16 @@
   env:
     NEWV: ""
     OLDV: ""
+    VALID: ${{ !github.event.pull_request.head.repo.fork && github.head_ref == 'dev' }}
 
-  jobs:      
+  jobs:     
+    run_tests:
+      if: env.VALID
+      uses: ./.github/workflows/test_runner.yml
+  
     test_new_release:
-      runs-on: ubuntu-latest
-      if: ${{ !github.event.pull_request.head.repo.fork && github.head_ref == 'dev' }}
+      needs: run_tests
+      runs-on: ubuntu-latest  
 
       steps:
         - uses: actions/checkout@v3
