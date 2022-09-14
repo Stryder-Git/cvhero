@@ -6,10 +6,10 @@
       
     workflow_dispatch:
 
-  jobs:
+  jobs:  
     wrong_branch:
       runs-on: ubuntu-latest
-      if: ${{ github.head_ref != 'dev' }}
+      if: ${{ github.event.pull_request.head.repo.fork || github.head_ref != 'dev' }}
       
       steps:
         - uses: superbrothers/close-pull-request@v3

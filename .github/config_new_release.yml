@@ -1,11 +1,14 @@
 
-new_version: '0.1.25'
+new_version: '0.1.44'
 
 change_log: |
-  - added readthedocs
+  - testing stuff
+  - and others
   
 
 
 release_body: |
-  Just figuring out the sphinx/rtd process
+
+
+  Full Documentation: cvhero.readthedocs.io
 

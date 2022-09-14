@@ -1,7 +1,7 @@
 name: test_runner
 on: 
   pull_request: 
-    branches: [main, dev]
+    branches: [dev]
   workflow_call:
   workflow_dispatch:
     
@@ -11,7 +11,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        python-version: ['3.8', '3.9'] #, '3.10']
+        python-version: ['3.8', '3.9', '3.10']
         
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -32,7 +32,6 @@ jobs:
         run: |          
           coverage run --source=cvhero -m pytest cv_tests
           coverage lcov -o coverage.lcov
-          # coverage report -m > pytest-coverage.txt   
           
       - name: coveralls parallel
         uses: coverallsapp/github-action@master

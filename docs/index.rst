@@ -8,10 +8,21 @@ Welcome to cvhero's documentation!
 
 Hi there, world!
 
+Examples:
+=========
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   
+   usage.rst
+   
 
+Log of Updates:
+===============
+.. toctree::
+   :maxdepth: 1
+   
+   change_log.rst
+ 
 
 
 Indices and tables

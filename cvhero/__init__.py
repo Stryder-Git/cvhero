@@ -8,11 +8,9 @@ except pkg_resources.DistributionNotFound:
 from .pandas_printer import format_pandas
 from pyperclip import copy
 
-def format(obj):
-    return format_pandas(obj)
+def format(obj): return format_pandas(obj)
 
-def clip(obj):
-   return copy(format(obj))
+def clip(obj): return copy(format(obj))
 
 
 
