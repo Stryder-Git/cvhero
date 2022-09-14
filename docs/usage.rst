@@ -4,8 +4,8 @@
     sys.path.append("../") 
     import cvhero as cv
 
-This is another random demonstration
-------------------------------------
+This is another demonstration
+-----------------------------
 
 .. code:: ipython3
 

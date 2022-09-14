@@ -3,6 +3,10 @@
 
 Updates
 -------
+0.2.1 (09/14/2022)
+~~~~~~~~~~~~~~
+- simplified some things in workflows
+
 0.1.44 (09/14/2022)
 ~~~~~~~~~~~~~~
 - testing stuff
