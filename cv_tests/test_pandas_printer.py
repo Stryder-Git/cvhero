@@ -17,7 +17,7 @@ series_formats = [
                dtype= 'datetime64[ns, UTC]'),
 
      "pd.Series(['2022-06-01 13:30:00', '2022-06-02 13:30:00', '2022-06-03 13:30:00'],"
-     "index= pd.DatetimeIndex(['2022-06-01', '2022-06-02', '2022-06-03']),"
+     "index= pd.DatetimeIndex(['2022-06-05', '2022-06-02', '2022-06-03']),"
      "dtype= 'datetime64[ns]').dt.tz_localize('UTC')"
      )
 ]
