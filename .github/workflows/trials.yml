@@ -24,9 +24,7 @@ jobs:
           pip install -r requirements.txt
           pip install jupyter
           sudo apt install pandoc
-          cd docs 
-          jupyter nbconvert --execute --ExecutePreprocessor.kernel_name='python3' --to rst --output-dir . --output usage.rst ../examples/usage.ipynb
-          cd ..
+          jupyter nbconvert --execute --ExecutePreprocessor.kernel_name='python3' --to rst --output-dir docs --output usage.rst examples/usage.ipynb
             
       - run: cat docs/usage.rst
         
