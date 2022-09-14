@@ -18,7 +18,12 @@ jobs:
           echo run_number $GITHUB_RUN_NUMBER
           echo run_attempt $GITHUB_RUN_ATTEMPT
           echo my var $VAR  
-      - run: echo next step $VAR
+      
+      - run: |
+          echo "VAR=2" >> $GITHUB_ENV
+          echo second step $VAR
+      
+      - run: echo last step $VAR
           
         
         
