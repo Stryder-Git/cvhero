@@ -11,21 +11,23 @@ jobs:
   trial:
     runs-on: ubuntu-latest
     steps:
-      - env:
-          VAR: 1
-        run: | 
-          echo run_id $GITHUB_RUN_ID
-          echo run_number $GITHUB_RUN_NUMBER
-          echo run_attempt $GITHUB_RUN_ATTEMPT
-          echo my var $VAR  
-      
-      - run: |
-          echo "VAR=$VAR-rc.${{github.run_number}}.${{github.run_attempt}}" >> $GITHUB_ENV
-          echo second step $VAR
-      
-      - run: echo last step $VAR
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
           
-        
+      - run: cat docs/usage.rst
+          
+      - name: prepare usage.rst
+        run: |
+          pip install jupyter
+          sudo apt install pandoc
+          cd docs 
+          jupyter nbconvert --execute --ExecutePreprocessor.kernel_name='python3' --to rst --output-dir . --output usage.rst ../examples/usage.ipynb
+          cd ..
+            
+      - run: cat docs/usage.rst
         
         
           
