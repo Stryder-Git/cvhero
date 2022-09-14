@@ -3,14 +3,25 @@ name: trials
 on:
   workflow_dispatch:
   
+  
+env:
+  VAR: 3
+  
 jobs:
   trial:
     runs-on: ubuntu-latest
     steps:
-      - run: | 
+      - env:
+          VAR: 1
+        run: | 
           echo run_id $GITHUB_RUN_ID
           echo run_number $GITHUB_RUN_NUMBER
           echo run_attempt $GITHUB_RUN_ATTEMPT
+          echo my var $VAR  
+      - run: echo next step $VAR
+          
+        
+        
         
           
           
