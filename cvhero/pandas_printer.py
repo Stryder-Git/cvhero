@@ -123,9 +123,6 @@ def format_pandas(obj):
 
     elif isinstance(obj, pd.Index):
         return format_index(obj)
-
-    else:
-        raise ValueError("Only pd.DataFrame, -Series, and -Index are currently supported")
         
         
 #
