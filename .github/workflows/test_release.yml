@@ -51,7 +51,7 @@
           run: echo you did not update the change_log && exit 1
         
         - name: make rc vnumber
-          run: echo "NEWV=${{env.NEWV}}rc.${{github.run_number}}.${{github.run_attempt}}" >> $GITHUB_ENV
+          run: echo "NEWV=${{env.NEWV}}rc${{github.run_number}}.dev${{github.run_attempt}}" >> $GITHUB_ENV
         
         - name: set version
           run: |  
