@@ -3,62 +3,30 @@ name: trials
 on:
   workflow_dispatch:
   
+  
+env:
+  VAR: 3
+  
 jobs:
   trial:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
-        with:
-          python-version: '3.10'
-          
-      - run: |
-          pip install pip --upgrade
-          pip install jupyter 
-          sudo apt install pandoc
-          pip install -r requirements.txt
-      - run: |
-          cd docs
-          jupyter nbconvert --to rst --output-dir . --output usage.rst ../examples/usage.ipynb
-          
+      - env:
+          VAR: 1
+        run: | 
+          echo run_id $GITHUB_RUN_ID
+          echo run_number $GITHUB_RUN_NUMBER
+          echo run_attempt $GITHUB_RUN_ATTEMPT
+          echo my var $VAR  
       
-  trial2:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
-        with:
-          python-version: '3.10'
-          
       - run: |
-          pip install pip --upgrade
-          pip install jupyter 
-          sudo apt install pandoc
-          pip install -r requirements.txt
-      - run: |
-          cd docs
-          jupyter nbconvert --execute --ExecutePreprocessor.kernel_name='python3' --to rst --output-dir . --output usage.rst ../examples/usage.ipynb
-  
-  trial3:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
-        with:
-          python-version: '3.10'
-          
-      - run: |
-          pip install pip --upgrade
-          pip install jupyter 
-          sudo apt install pandoc
-          pip install -r requirements.txt
-      - run: |
-          cd docs
-          jupyter nbconvert --execute --to rst --output-dir . --output usage.rst ../examples/usage.ipynb
-          
+          echo "VAR=$VAR-rc.${{github.run_number}}.${{github.run_attempt}}" >> $GITHUB_ENV
+          echo second step $VAR
       
+      - run: echo last step $VAR
+          
         
-          
+        
         
           
           

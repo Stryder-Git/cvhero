@@ -10,8 +10,8 @@
     
 
 
-This is fudf demonstration
---------------------------
+This is another random demonstration
+------------------------------------
 
 .. code:: ipython3
 

@@ -127,6 +127,10 @@ def format_pandas(obj):
     else:
         raise ValueError("Only pd.DataFrame, -Series, and -Index are currently supported")
         
+def random_func():
+    print()
+    return
+        
         
 #
 # pd.DataFrame({
