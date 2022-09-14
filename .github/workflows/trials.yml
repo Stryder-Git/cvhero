@@ -21,6 +21,7 @@ jobs:
           
       - name: prepare usage.rst
         run: |
+          pip install -r requirements.txt
           pip install jupyter
           sudo apt install pandoc
           cd docs 
