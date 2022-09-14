@@ -1,9 +1,8 @@
 
-new_version: '0.1.44'
+new_version: '0.2.1'
 
 change_log: |
-  - testing stuff
-  - and others
+  - simplified some things in workflows
   
 
 
