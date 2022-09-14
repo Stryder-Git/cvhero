@@ -49,9 +49,13 @@
         - name: exit_no_version
           if: ${{ env.NEWV <= env.OLDV }}
           run: echo you did not update the change_log && exit 1
-
+        
+        - name: make rc vnumber
+          run: echo "NEWV=$NEWV-rc.${{github.run_number}}.${{github.run_attempt}}" >> $GITHUB_ENV
+        
         - name: set version
           run: |  
+              echo release candidate: $NEWV
               sed -i "s/$OLDV/$NEWV/" setup.py
               sed -i "s/$OLDV/$NEWV/" pyproject.toml
               
