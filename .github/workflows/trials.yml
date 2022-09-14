@@ -20,7 +20,7 @@ jobs:
           echo my var $VAR  
       
       - run: |
-          echo "VAR=2" >> $GITHUB_ENV
+          echo "VAR=$VAR-rc.${{github.run_number}}.${{github.run_attempt}}" >> $GITHUB_ENV
           echo second step $VAR
       
       - run: echo last step $VAR
