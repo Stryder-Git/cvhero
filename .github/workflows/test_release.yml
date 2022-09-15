@@ -79,7 +79,7 @@
 
         - name: Install from testpypi           
           run: | 
-            while [ "$NEWV" != '$(pip index versions cvhero | cut -d'(' -f2 | cut -d')' -f1 | sed 1q)' ];\
+            while [ "$NEWV" != $(pip index versions cvhero | cut -d'(' -f2 | cut -d')' -f1 | sed 1q) ];\
               do echo not found yet, sleeping 5s; sleep 5s; done
             pip install cvhero
             
