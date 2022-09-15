@@ -22,6 +22,8 @@ jobs:
           pip install pip --upgrade
           V=0.2.2
           COMM="pip index versions cvhero | grep 'LATEST:' | tr -s ' ' | cut -d' ' -f3"
+          echo $V
+          echo $COMM
           while [ "$V" != $(eval "$COMM") ]; do echo not found yet, sleeping 5s; sleep 5s; V=0.2.1; done
             
       - run: python -c 'import cvhero; print(cvhero.__version__)'
