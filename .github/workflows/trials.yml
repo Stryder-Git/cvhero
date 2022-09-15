@@ -19,7 +19,7 @@ jobs:
           
       - name: prepare usage.rst
         env:
-          V: 0.2.1
+          V: "0.2.1"
           COMM: "pip index versions cvhero | grep 'LATEST:' | tr -s ' ' | cut -d' ' -f3"
         run: |
           pip install pip --upgrade
