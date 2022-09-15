@@ -68,7 +68,7 @@
           run: |
             pip install --upgrade pip
             pip install build twine pytest
-            copy cvhero/__init__.py oldinit.py
+            cp cvhero/__init__.py oldinit.py
             echo print("DONWLOADED") > cvhero/__init__.py && cat oldinit.py >> cvhero/__init__.py
             
         - name: Build source distribution and wheel files
