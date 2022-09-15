@@ -68,6 +68,8 @@
           run: |
             pip install --upgrade pip
             pip install build twine pytest
+            copy cvhero/__init__.py oldinit.py
+            echo print("DONWLOADED") > cvhero/__init__.py && cat oldinit.py >> cvhero/__init__.py
             
         - name: Build source distribution and wheel files
           run: python -m build
@@ -86,5 +88,5 @@
             pip install .
             mv cvhero cvhero_copy
             python -c 'import cvhero;print(cvhero.__version__)'
-            pytest cv_tests
+            pytest cv_tests -s
             
