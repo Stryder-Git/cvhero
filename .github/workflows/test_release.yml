@@ -77,11 +77,11 @@
         - name: Upload files to TestPyPI
           run: python -m twine upload --verbose --repository testpypi dist/* -u__token__ -p${{ secrets.TEST_PYPI_TOKEN }}
 
-        - name: Install from testpypi
-          continue-on-error: true
-          run: |
-            pip install --index-url https://test.pypi.org/simple cvhero==$NEWV --no-deps 
-            while [ $? -gt 0 ]; do echo not found yet, sleeping 5s; sleep 5s; pip install --index-url https://test.pypi.org/simple cvhero==$NEWV --no-deps ; done
+        - name: Install from testpypi           
+          run: | 
+            while [ "$NEWV" != $(pip index versions cvhero | grep 'LATEST:' | tr -s ' ' | cut -d' ' -f3) ];\
+              do echo not found yet, sleeping 5s; sleep 5s; done
+            pip install cvhero
             
         - name: test new release
           run: | 
