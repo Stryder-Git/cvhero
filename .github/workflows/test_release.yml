@@ -85,6 +85,7 @@
             
         - name: test new release
           run: | 
+            cat oldinit.py > cvhero/__init__.py
             pip install .
             python -c 'import cvhero;print(cvhero.__version__)'
             pytest cv_tests -s
