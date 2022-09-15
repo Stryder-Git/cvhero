@@ -92,9 +92,8 @@ jobs:
             
       - name: run tests
         run: |
-            cat oldinit.py > cvhero/__init__.py
             pip install .
-            # mv cvhero cvhero_copy
+            mv cvhero cvhero_copy
             python -c 'import cvhero;print(cvhero.__version__)'
             pytest cv_tests -s
           
