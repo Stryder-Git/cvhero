@@ -67,7 +67,7 @@
         - name: Install dependencies
           run: |
             pip install --upgrade pip
-            pip install build twine
+            pip install build twine pytest
             
         - name: Build source distribution and wheel files
           run: python -m build
@@ -75,13 +75,16 @@
         - name: Upload files to TestPyPI
           run: python -m twine upload --verbose --repository testpypi dist/* -u__token__ -p${{ secrets.TEST_PYPI_TOKEN }}
 
-        - name: Install from test and run tests
+        - name: Install from testpypi
           continue-on-error: true
           run: |
             pip install --index-url https://test.pypi.org/simple cvhero==$NEWV --no-deps 
             while [ $? -gt 0 ]; do echo not found yet, sleeping 5s; sleep 5s; pip install --index-url https://test.pypi.org/simple cvhero==$NEWV --no-deps ; done
+            
+        - name: test new release
+          run: | 
             pip install .
             mv cvhero cvhero_copy
             python -c 'import cvhero;print(cvhero.__version__)'
             pytest cv_tests
-            pip uninstall -y cvhero 
+            
