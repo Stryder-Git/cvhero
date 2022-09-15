@@ -79,9 +79,9 @@
 
         - name: Install from testpypi           
           run: | 
-            while [ "$NEWV" != $(pip index versions cvhero | cut -d'(' -f2 | cut -d')' -f1 | sed 1q) ];\
+            while [ "$NEWV" != $(pip index versions -i https://test.pypi.org/simple --pre cvhero | cut -d'(' -f2 | cut -d')' -f1 | sed 1q) ];\
               do echo not found yet, sleeping 5s; sleep 5s; done
-            pip install cvhero
+            pip install -i https://test.pypi.org/simple cvhero==$NEWV
             
         - name: test new release
           run: | 
