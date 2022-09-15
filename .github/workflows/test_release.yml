@@ -86,7 +86,6 @@
         - name: test new release
           run: | 
             pip install .
-            mv cvhero cvhero_copy
             python -c 'import cvhero;print(cvhero.__version__)'
             pytest cv_tests -s
             
