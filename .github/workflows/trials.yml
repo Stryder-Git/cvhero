@@ -18,12 +18,11 @@ jobs:
           python-version: "3.10"
           
       - name: prepare usage.rst
-        continue-on-error: true
         run: |
           pip install pip --upgrade
           V=0.2.2
           COMM="pip index versions cvhero | grep 'LATEST:' | tr -s ' ' | cut -d' ' -f3"
-          while [ $V != $(eval "$COMM") ]; do echo not found yet, sleeping 5s; sleep 5s; V=0.2.1; done
+          while [ "$V" != $(eval "$COMM") ]; do echo not found yet, sleeping 5s; sleep 5s; V=0.2.1; done
             
       - run: python -c 'import cvhero; print(cvhero.__version__)'
         
