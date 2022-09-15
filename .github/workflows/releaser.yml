@@ -82,12 +82,12 @@ jobs:
         
       - name: Install and run tests
         run: |
-          echo "Will wait 120s" && sleep 120s
-          pip install cvhero
-          pip install -r requirements.txt
-          python -c 'import cvhero;print(cvhero.__version__)'
-          pytest cv_tests
-          pip uninstall -y cvhero
+            pip install --index-url https://test.pypi.org/simple cvhero==$NEWV --no-deps 
+            while [ $? -gt 0 ]; do echo not found yet, sleeping 5s; sleep 5s; pip install --index-url https://test.pypi.org/simple cvhero==$NEWV --no-deps ; done
+            pip install .
+            mv cvhero cvhero_copy
+            python -c 'import cvhero;print(cvhero.__version__)'
+            pytest cv_tests
           
       - name: prepare usage.rst
         run: |
