@@ -77,7 +77,7 @@
 
         - name: Install from test and run tests
           run: |
-            echo "Will wait 120s" && sleep 120s
+            echo "Will wait 5s" && sleep 5s
             pip install pip --upgrade
             pip install --index-url https://test.pypi.org/simple cvhero==$NEWV --no-deps 
             pip install -r requirements.txt
