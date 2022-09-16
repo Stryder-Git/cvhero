@@ -54,6 +54,7 @@ def test_format_dataframe(df, formatted):
 
 
 
-
-
+def test_fix():
+    assert cvhero.pandas_printer.print_this(3) is True
+    assert not cvhero.pandas_printer.print_this(4) is False
 
