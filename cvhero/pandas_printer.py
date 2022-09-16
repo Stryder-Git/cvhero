@@ -124,7 +124,7 @@ def format_pandas(obj):
     elif isinstance(obj, pd.Index):
         return format_index(obj)
     
- def print_this(x):
+def print_this(x):
     print(x)
     return True
         
