@@ -61,8 +61,6 @@ jobs:
         run: |  
             sed -i "s/$OLDV/$NEWV/" setup.py
             sed -i "s/$OLDV/$NEWV/" pyproject.toml
-            
-            echo 
 
       - name: Set up Python
         uses: actions/setup-python@v4
