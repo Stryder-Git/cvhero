@@ -5,6 +5,8 @@ try:
 except pkg_resources.DistributionNotFound:
     __version__ = 'development'
 
+print()
+    
 from .pandas_printer import format_pandas
 from pyperclip import copy
 
